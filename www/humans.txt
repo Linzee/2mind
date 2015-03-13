@@ -1,0 +1,14 @@
+/* TEAM */
+Developer: Dominik Gmiterko
+Twitter: @Ienze
+Location: Slovakia
+
+/* THANKS */
+niC00L: partner in science
+miška: za prvu kritiku: Je to najvačšia somarina na svete, celé to vymaž.
+
+/* SITE */
+Last update: 20/02/2015
+Standards: HTML5, CSS3, javascript
+Components: Nette, ZURB Foundation, Modernizr, jQuery
+Software: NetBeans IDE, TopStyle 5.0

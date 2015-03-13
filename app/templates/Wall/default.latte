@@ -1,0 +1,145 @@
+{layout ../@layout_menu.latte}
+
+{block title}Plocha{/block}
+
+{block content}
+
+<section class="fullpage wall-container">
+
+    <div id="wall">
+        <div class="blocks-holder-mover"></div>
+        <div class="blocks-holder">
+            {include blockZero.latte}
+        </div>
+    </div>
+
+    <header class="with-bg">
+        <div class="coords" id="tutorial-coord">
+            <input type="number" class="semiedtable x" />
+            <input type="number" class="semiedtable y" />
+        </div>
+        <div id="blockInfo">
+            <div>
+                <input id="tutorial-title" type="text" class="semiedtable title" size="50"/>
+                <span style="font-size: 1.5rem" class="dynamic-width-input"></span>
+            </div>
+            <div>
+                <input type="text" class="semiedtable description" size="80"/>
+                <span style="font-size: 0.875rem" class="dynamic-width-input"></span>
+            </div>
+        </div>
+        <ul class="icon-list">
+            <li id="tutorial-search" class="search">
+                <form class="searchForm" method="post">
+                    <input type="text" name="search" />
+                </form>
+                <a class="icon search-icon" href="#">Vyhľadávanie</a>
+            </li>
+            <li class="icon spawn"><a href="#">{_}Začiatok{/_}</a></li>
+            <li id="tutorial-menu" class="icon menu"><a class="right-off-canvas-toggle" href="#" >{_}Menu{/_}</a></li>
+        </ul>
+    </header>
+    <footer>
+        <span id="tutorial-delete" class="icon delete"><a href="#" >{_}Odstrániť{/_}</a></span>
+        <span id="tutorial-add" class="icon add"><a href="#" >{_}Nová správa{/_}</a></span>
+    </footer>
+</section>
+
+<div id="addReveal" class="reveal-modal medium" data-reveal>
+    <form id="addForm" method="post">
+        <div class="row collapse">
+            <div class="small-12 medium-10 columns">
+                <textarea name="text" class="text"></textarea>
+            </div>
+            <div class="small-12 medium-2 columns">
+                <input class="expand button large submit" type="submit" name="add" value="Odoslať" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<ol class="joyride-list" data-joyride>
+    <li data-options="tip_location: top; prev_button: false" data-prev-text="Speť" data-text="Ďalej">
+        <h4>Vitajte</h4>
+        <p>Ak sa chcete zorientovať na stránke môžete si pozrieť návod alebo ho zavrieť.</p>
+    </li>
+    <li data-id="tutorial-add" data-options="tip_location: top" data-prev-text="Speť" data-text="Ďalej">
+        <h4>Nová správa</h4>
+        <p>Kliknutím na tento symbol sa otvorí okno na napísanie novej správy. Takisto môžeš odpovedať na jednotlivé správy keď stlačíš tlačidlo na nich.</p>
+    </li>
+    <li data-id="tutorial-title" data-options="tip_location: bottom" data-prev-text="Speť" data-text="Ďalej">
+        <h4>Štvorce</h4>
+        <p>Tu sa da zistiť alebo zmeniť nadpis a popis štvorca v ktorom sa pravé nachádzaš.</p>
+    </li> 
+    <li data-id="tutorial-coord" data-options="tip_location: right" data-prev-text="Speť" data-text="Ďalej">
+        <h4>Aktuálna pozícia</h4>
+        <p>V tomto rohu môžeš zistiť svoju aktuálnu pozíciu alebo ju upraviť.</p>
+    </li>
+    <li data-id="tutorial-search" data-options="tip_location: left" data-prev-text="Speť" data-text="Ďalej">
+        <h4>Vyhľadávanie</h4>
+        <p>Ak ta nejaká téma zaujala a chceš sa k nej vrátiť, môžeš pohľadať jej názov.</p>
+    </li>
+    <li data-id="tutorial-menu" data-options="tip_location: left" data-prev-text="Speť" data-text="Ďalej">
+        <h4>Menu</h4>
+        <p>Tu môžeme nájsť ďalšie zaujímavé veci ako napríklad mapu, zoznam posledných správ, nastavenia, zapnutie stránky na celú obrazovku.</p>
+    </li>
+    <li data-options="tip_location: top right" data-prev-text="Speť" data-text="Ďalej">
+        <h4>Mazanie</h4>
+        <p>Jednotlivé správy môžeš premiestňovať ťahaním. Ak chceš správu odstrániť stačí ju potiahnuť do pravého dolného rohu a pustiť.</p>
+    </li>
+    <li data-options="tip_location: left" data-prev-text="Speť" data-text="Koniec">
+        <p>To je všetko, zvyšok budeš musieť objaviť sám. Prajem veľa šťastia pri objavovaní tejto stránky.</p>
+    </li>
+</ol>
+
+{/block}
+
+{block scripts}
+{include parent}
+<script src="{$basePath}/js/jquery-collision.min.js"></script>
+<script src="{$basePath}/js/jquery.mousewheel.min.js"></script>
+<script src="{$basePath}/js/2minD/utils.js"></script>
+<script src="{$basePath}/js/2minD/actions.js"></script>
+<script src="{$basePath}/js/2minD/wall.js"></script>
+<script src="{$basePath}/js/2minD/post.js"></script>
+<script src="{$basePath}/js/2minD/blockEditing.js"></script>
+<script src="{$basePath}/js/2minD/system.js"></script>
+<script src="{$basePath}/js/2minD/infiniteMover.js"></script>
+<script src="{$basePath}/js/2minD/latest.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+
+        blocksHolder.twoMinDwall(utils, baseSettings);
+        blocksHolder.twoMinDsystem(utils, baseSettings);
+        blocksHolder.twoMinDblockEditing(utils, baseSettings);
+        blocksHolder.twoMinDpost(utils, baseSettings);
+
+
+        $('.blocks-holder-mover').twoMinDinfiniteMover({
+            target: blocksHolder
+        });
+
+        //actions
+        $('header .icon-list .spawn').twoMinDaction({
+            action: 'spawn'
+        });
+        $('footer .icon.add').twoMinDaction({
+            action: 'add'
+        });
+        $('#addReveal').twoMinDaction({
+            action: 'addReveal'
+        });
+
+        $('#block_0_0 .search').twoMinDaction({
+            action: 'search_button'
+        });
+
+        $('#block_0_0 .latest-posts').twoMinDlatest({
+            ajax_url: {$basePath} + "/latest/",
+            limit: 6
+        });
+    });
+</script>
+{/block}

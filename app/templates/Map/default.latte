@@ -1,0 +1,43 @@
+{layout ../@layout_menu.latte}
+
+{block title}Mapa{/block}
+
+{block content}
+
+<section class="fullpage wall-container">
+    <div id="wall">
+        <div class="blocks-holder-mover"></div>
+        <div class="blocks-holder cross">
+            
+        </div>
+        {include ../endora.latte}
+    </div>
+    <header>
+        {include ../baseIconsMenu.latte}
+    </header>
+</section>
+
+{/block}
+
+{block scripts}
+{include parent}
+<script src="{$basePath}/js/jquery.mousewheel.min.js"></script>
+<script src="{$basePath}/js/2minD/map.js"></script>
+<script src="{$basePath}/js/2minD/infiniteMover.js"></script>
+<script src="{$basePath}/js/2minD/actions.js"></script>
+<script type="text/javascript">
+    $(function(){
+        blocksHolder.twoMinDmap({
+            ajax_url: {$basePath} + "/map/"
+        });
+        $('.blocks-holder-mover').twoMinDinfiniteMover({
+            target: blocksHolder
+        });
+        $('header .icon-list .spawn').twoMinDaction({
+            action: 'spawn',
+            spawnToCenter: true
+        });
+    });
+    
+</script>
+{/block}

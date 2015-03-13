@@ -1,0 +1,31 @@
+{layout ../@layout_menu.latte}
+
+{block title}Najnovšie témy{/block}
+
+{block content}
+
+<section class="fullpage-min wall-container">
+    <header>
+        {include ../baseIconsMenu.latte}
+    </header>
+    <h3 class="page-title">{_}Najnovšie témy{/_}:</h3>
+    <ul class="latest-posts posts-list">
+        
+    </ul>
+    {include ../endora.latte}
+</section>
+
+{/block}
+
+{block scripts}
+{include parent}
+<script src="{$basePath}/js/2minD/latest.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.latest-posts').twoMinDlatest({
+            ajax_url: {$basePath} + "/latest/",
+            blocks: true
+        });
+    });
+</script>
+{/block}

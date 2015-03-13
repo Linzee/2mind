@@ -1,0 +1,59 @@
+@mixin pixelated-bg() {
+  //render image pixelated
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+@mixin gradient($from, $to, $top-glow: false) {
+	@if $top-glow {
+		background: mix($from, $to); /* Old browsers */
+		background: url('../images/glow.png') no-repeat left top, url('../images/glow.png') no-repeat right top, mix($from, $to); /* Old browsers */
+		background: url('../images/glow.png') no-repeat left top, url('../images/glow.png') no-repeat right top, -moz-linear-gradient(top, $from 0%, $to 100%); /* FF3.6+ */
+		background: url('../images/glow.png') no-repeat left top, url('../images/glow.png') no-repeat right top, -webkit-gradient(linear, left top, left bottom, color-stop(0%,$from), color-stop(100%,$to)); /* Chrome,Safari4+ */
+		background: url('../images/glow.png') no-repeat left top, url('../images/glow.png') no-repeat right top, -webkit-linear-gradient(top, $from 0%,$to 100%); /* Chrome10+,Safari5.1+ */
+		background: url('../images/glow.png') no-repeat left top, url('../images/glow.png') no-repeat right top, -o-linear-gradient(top, $from 0%,$to 100%); /* Opera 11.10+ */
+		background: url('../images/glow.png') no-repeat left top, url('../images/glow.png') no-repeat right top, -ms-linear-gradient(top, $from 0%,$to 100%); /* IE10+ */
+		background: url('../images/glow.png') no-repeat left top, url('../images/glow.png') no-repeat right top, linear-gradient(to bottom, $from 0%,$to 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$from', endColorstr='$to',GradientType=0 ); /* IE6-9 */
+	} @else {
+		background: mix($from, $to); /* Old browsers */
+		background: -moz-linear-gradient(top, $from 0%, $to 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$from), color-stop(100%,$to)); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top, $from 0%,$to 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top, $from 0%,$to 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top, $from 0%,$to 100%); /* IE10+ */
+		background: linear-gradient(to bottom, $from 0%,$to 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$from', endColorstr='$to',GradientType=0 ); /* IE6-9 */
+	}
+}
+
+@mixin auto-gradient($color, $percentage: 50%, $top-glow: false) {
+	$from: scale-color($color, $lightness: $percentage);
+	$to: scale-color($color, $lightness: ($percentage*-1));
+	@include gradient($from, $to, $top-glow);
+}
+
+@mixin icons-generator($names:(none), $coords:(0 0), $sizes:false) {
+	$i: 1;
+	@each $name in $names {
+		&.#{$name} {
+			background-position: nth($coords, $i);
+			@if $sizes {
+				width: #{nth(nth($sizes, $i), 1)}px;
+				height: #{nth(nth($sizes, $i), 2)}px;
+			}
+		}
+		$i: $i+1;
+	}
+}
+
+@mixin rotate($angle) {
+	-webkit-transform: rotate($angle);
+	-moz-transform:    rotate($angle);
+	-ms-transform:     rotate($angle);
+	-o-transform:      rotate($angle);
+	transform:			 rotate($angle);
+}
