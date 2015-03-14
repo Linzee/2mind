@@ -2,14 +2,17 @@
 
 namespace App\Presenters;
 
-use App\Model\WallError;
-
 class UsersPresenter extends BasePresenter {
-    
+
     public function renderUsers() {
 
         if ($this->isAjax() || $this->allowWithoutAjax) {
-            
+
+            if (!$this->currentUser->isModerator()) {
+                $this->simpleResponse(\App\Model\WallError::NO_MODERATOR);
+                return;
+            }
+
             $resopnse = $this->usersManager->users();
 
             $this->simpleResponse($resopnse);
@@ -17,11 +20,16 @@ class UsersPresenter extends BasePresenter {
             throw new \Nette\Application\ForbiddenRequestException("Only avaleible trought ajax.");
         }
     }
-    
+
     public function renderUser($id) {
 
         if ($this->isAjax() || $this->allowWithoutAjax) {
-            
+
+            if (!$this->currentUser->isModerator()) {
+                $this->simpleResponse(\App\Model\WallError::NO_MODERATOR);
+                return;
+            }
+
             $resopnse = $this->usersManager->user($id);
 
             $this->simpleResponse($resopnse);
@@ -29,6 +37,5 @@ class UsersPresenter extends BasePresenter {
             throw new \Nette\Application\ForbiddenRequestException("Only avaleible trought ajax.");
         }
     }
-    
-    
+
 }

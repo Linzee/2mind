@@ -29,16 +29,11 @@ class Users implements IResponse {
 
         foreach ($this->users as $user) {
             $formatedUser = array();
-            
+
             foreach (self::$fieldsToCopy as $field) {
                 $formatedUser[$field] = $user->$field;
             }
-            
-            //if is logined user, not anonym, send also user (login users have max 16 characters while not logined have about 40)
-            if(strlen($user->id <= 16)) {
-                $formatedUser['login'] = TRUE;
-            }
-            
+
             $formatedUsers[] = $formatedUser;
         }
 

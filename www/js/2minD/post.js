@@ -1,9 +1,10 @@
 $.fn.twoMinDpost = function (utils, settingsIn) {
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain + '/wall/',
+        ajax_url: 'http://' + document.domain,
         draggDelay: 100,
-        draggDistance: 5
+        draggDistance: 5,
+        moderator: false
     }, settingsIn);
 
     var deleteButton = $("footer .icon.delete");
@@ -13,7 +14,7 @@ $.fn.twoMinDpost = function (utils, settingsIn) {
 
     var movePost = function (id, offset) {
 
-        var url = settings.ajax_url + "move?id=" + id + "&x=" + Math.round(offset.left) + "&y=" + Math.round(offset.top);
+        var url = settings.ajax_url + "/wall/move?id=" + id + "&x=" + Math.round(offset.left) + "&y=" + Math.round(offset.top);
 
         $.ajax({
             url: url,
@@ -28,7 +29,7 @@ $.fn.twoMinDpost = function (utils, settingsIn) {
 
     var deletePost = function (id) {
 
-        var url = settings.ajax_url + "remove?id=" + id;
+        var url = settings.ajax_url + "/wall/remove?id=" + id;
 
         $.ajax({
             url: url,
@@ -40,10 +41,10 @@ $.fn.twoMinDpost = function (utils, settingsIn) {
         });
 
     };
-    
+
     var renewPost = function (id) {
 
-        var url = settings.ajax_url + "renew?id=" + id;
+        var url = settings.ajax_url + "/wall/renew?id=" + id;
 
         $.ajax({
             url: url,
@@ -82,7 +83,7 @@ $.fn.twoMinDpost = function (utils, settingsIn) {
     };
 
     var stopDraggingPost = function (event) {
-        
+
         var post = $(event.target);
 
         if (post.hasClass('post-group')) {
@@ -90,23 +91,23 @@ $.fn.twoMinDpost = function (utils, settingsIn) {
         } else {
             var postId = parseInt(post.attr("id").substring(5));
         }
-        
+
         if (intersectOffsetElement({
-            left: event.pageX, 
+            left: event.pageX,
             top: event.pageY
         }, deleteButton)) {
-            
+
             //delete me
             deletePost(postId);
 
             post.hide();
         } else {
             movePost(postId, post.position());
-            
+
             //Intersecting posts
             moveIntersectingPosts(post);
         }
-        
+
         deleteButton.hide();
         addButton.show();
     };
@@ -227,11 +228,13 @@ $.fn.twoMinDpost = function (utils, settingsIn) {
             $(".post").removeClass("selected");
             $(this).addClass("selected");
         });
-        
-        post.find('.renew').mousedown(function () {
-            var postId = post.attr("id").substring(5);
-            renewPost(postId);
-        });
+
+        if (settings.moderator) {
+            $(this).click(function () {
+                /*var postId = post.attr("id").substring(5);
+                 renewPost(postId);*/
+            })
+        }
     });
 
 };

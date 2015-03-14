@@ -6,7 +6,7 @@ namespace App\Presenters;
  * Latest presenter = everything in this something.
  */
 class LatestPresenter extends BasePresenter {
-    
+
     /** @inject @var \App\TwoMinD\Wall */
     public $wall;
 
@@ -14,6 +14,10 @@ class LatestPresenter extends BasePresenter {
         
     }
     
+    public function renderBlocks() {
+        
+    }
+
     public function renderLatest($lastUpdate = null, $includeDeleted = false, $limit = 100, $blocks = false) {
 
         if ($this->isAjax() || $this->allowWithoutAjax) {
@@ -25,4 +29,5 @@ class LatestPresenter extends BasePresenter {
             throw new \Nette\Application\ForbiddenRequestException("Only avaleible trought ajax.");
         }
     }
+
 }

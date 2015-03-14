@@ -143,8 +143,8 @@ class Wall extends \Nette\Object {
         if ($spamCheck) {
             return $spamCheck;
         }
-        
-        if(!$this->checkPosition($x, $y, $block_x, $block_y)) {
+
+        if (!$this->checkPosition($x, $y, $block_x, $block_y)) {
             return WallError::$WRONG_POS;
         }
 
@@ -169,15 +169,15 @@ class Wall extends \Nette\Object {
         if ($spamCheck) {
             return $spamCheck;
         }
-        
+
         $post = $this->database->table('wall_posts')->get($id);
-        
+
         if ($post != null) {
-            
-            if(!$this->checkPosition($x, $y, $post->block_x, $post->block_y)) {
+
+            if (!$this->checkPosition($x, $y, $post->block_x, $post->block_y)) {
                 return new WallError::$WRONG_POS;
             }
-            
+
             return $post->update(array(
                         'local_x' => $x,
                         'local_y' => $y
@@ -186,19 +186,19 @@ class Wall extends \Nette\Object {
 
         return true;
     }
-    
+
     private function checkPosition($x, $y, $block_x, $block_y) {
-        
-        if($x < 0 || $x > 2100 || $y < 0 || $y > 2100) {
+
+        if ($x < 0 || $x > 2100 || $y < 0 || $y > 2100) {
             return fallse;
         }
-        
-        if($block_x == 0 && $block_y == 0) {
-            if($x < 1500 && $y < 562) {
+
+        if ($block_x == 0 && $block_y == 0) {
+            if ($x < 1500 && $y < 562) {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -222,14 +222,14 @@ class Wall extends \Nette\Object {
 
         return true;
     }
-    
+
     public function renew($id) {
-        
+
         $spamCheck = $this->wallSpamFilter->checkSpam('delete');
         if ($spamCheck) {
             return $spamCheck;
         }
-        
+
         $post = $this->database->table('wall_posts')->get($id);
 
         if ($post != null) {
@@ -251,14 +251,21 @@ class Wall extends \Nette\Object {
         foreach ($childs as $child) {
             $childId = $child->id;
 
-            if($renew) {
-                $child->update( array('deleted' => false) );
+            if ($renew) {
+                $child->update(array('deleted' => false));
             } else {
-                $child->update( array('deleted' => true) );
+                $child->update(array('deleted' => true));
             }
-            
+
             $this->removeChilds($childId, $renew);
         }
+    }
+
+    public function post($id) {
+
+        $post = $this->database->table('wall_posts')->get($id);
+
+        return new \App\TwoMinD\Response\Post($post);
     }
 
     public function search($search) {

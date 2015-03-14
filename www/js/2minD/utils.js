@@ -4,11 +4,11 @@ function twoMinDutils(settingsIn) {
         block_size: 2100,
         blocksHolder: false
     }, settingsIn);
-    
+
     this.stuped = function () {
         alert('stuped');
     };
-    
+
     this.getScreenCenterBlockPosition = function () {
 
         var x = Math.round((-1 * settings.blocksHolder.position().left) + $(window).width() / 2);
@@ -24,7 +24,7 @@ function twoMinDutils(settingsIn) {
      * @returns {Array}
      */
     this.getScreenBlockPositionAt = function (screen_x, screen_y) {
-        
+
         var x = Math.round((-1 * settings.blocksHolder.position().left) + $(window).width() * screen_x);
         var y = Math.round((-1 * settings.blocksHolder.position().top) + $(window).height() * screen_y);
 
@@ -45,10 +45,10 @@ function twoMinDutils(settingsIn) {
     };
 
     this.getScreenRangeBlocks = function () {
-        
+
         var leftTopPos = this.getScreenBlockPositionAt(0, 0);
         var rightBottomPos = this.getScreenBlockPositionAt(1, 1);
-        
+
         var block_x1 = Math.floor(leftTopPos[0] / settings.block_size);
         var block_y1 = Math.floor(leftTopPos[1] / settings.block_size);
         var block_x2 = Math.floor(rightBottomPos[0] / settings.block_size);
@@ -91,37 +91,46 @@ function twoMinDutils(settingsIn) {
         return parseInt(colorPart, 16) < 80;
     };
 
+    this.prettyDate = function (date) {
+        var secs = Math.floor((new Date().getTime() - date.getTime()) / 1000);
+        if (secs < 3600)
+            return Math.floor(secs / 60) + " min(s) ago";
+        if (secs < 86400)
+            return Math.floor(secs / 3600) + " hour(s) ago";
+        return date.toDateString();
+    }
+
     return this;
 }
 ;
 
 //utility bugfixes
 $(function () {
-    
+
     $('.fullpage').css('height', $(window).height());
     $(window).resize(function () {
         $('.fullpage').css('height', $(window).height());
     });
-    
+
     $('.fullpage-min').css('min-height', $(window).height());
     $(window).resize(function () {
         $('.fullpage-min').css('min-height', $(window).height());
     });
-    
-    
+
+
     //dynamic width input
-    $('.dynamic-width-input').each(function() {
+    $('.dynamic-width-input').each(function () {
         var dynamicElement = $(this);
         var input = dynamicElement.prev();
         dynamicElement.hide();
-        
-        input.on("keypress changeLength", function(e) {
+
+        input.on("keypress changeLength", function (e) {
             if (e.which !== 0 && e.charCode !== 0) {
-                var c = String.fromCharCode(e.keyCode|e.charCode);
+                var c = String.fromCharCode(e.keyCode | e.charCode);
                 dynamicElement.text($(this).val() + c);
-                
+
                 var inputSize = dynamicElement.width();
-                if(inputSize < 64) {
+                if (inputSize < 64) {
                     inputSize = 64;
                 }
                 $(this).css("width", inputSize);

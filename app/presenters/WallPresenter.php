@@ -3,9 +3,8 @@
 namespace App\Presenters;
 
 use Nette\Utils\Validators,
-    App\Response\System,
-    Nette\Application\Responses\JsonResponse,
-    App\Response\LatestPosts;
+    App\TwoMinD\Response\System,
+    Nette\Application\Responses\JsonResponse;
 
 /**
  * Wall presenter = everything in this something.
@@ -15,10 +14,6 @@ class WallPresenter extends BasePresenter {
     /** @inject @var \App\TwoMinD\Wall */
     public $wall;
 
-    public function renderDefault() {
-        $this->template->online = $this->usersManager->getCurrentOnlineCount();
-    }
-
     public function renderSystem($x, $y) {
 
         if (Validators::isNumeric($x) && Validators::isNumeric($y)) {
@@ -26,7 +21,7 @@ class WallPresenter extends BasePresenter {
 
                 $this->currentUser->updateUser($x, $y);
 
-                $this->sendResponse(new System($this->currentUser->getCurrentOnlineCount()));
+                $this->sendResponse(new System($this->usersManager->getCurrentOnlineCount()));
             } else {
                 throw new \Nette\Application\ForbiddenRequestException("Only avaleible trought ajax.");
             }
@@ -136,6 +131,23 @@ class WallPresenter extends BasePresenter {
         }
     }
 
+    public function renderPost($id) {
+
+        if ($this->isAjax() || $this->allowWithoutAjax) {
+
+            if (!$this->currentUser->isModerator()) {
+                $this->simpleResponse(\App\Model\WallError::NO_MODERATOR);
+                return;
+            }
+
+            $resopnse = $this->wall->post($id);
+
+            $this->simpleResponse($resopnse);
+        } else {
+            throw new \Nette\Application\ForbiddenRequestException("Only avaleible trought ajax.");
+        }
+    }
+
     public function renderSearch($search) {
 
         if ($this->isAjax() || $this->allowWithoutAjax) {
@@ -168,7 +180,7 @@ class WallPresenter extends BasePresenter {
             throw new \Nette\Application\ForbiddenRequestException("Only avaleible trought ajax.");
         }
     }
-    
+
     public function actionRandom($mode) {
 
         if ($mode == 'empty' || $mode == 'full') {
@@ -188,18 +200,9 @@ class WallPresenter extends BasePresenter {
     public function renderLoad() {
 
         $this->sendResponse(new JsonResponse(array(
-            '1' => $this->currentUser->getCurrentOnlineCount(1),
-            '15' => $this->currentUser->getCurrentOnlineCount(15),
-            '60' => $this->currentUser->getCurrentOnlineCount(60)
+            '1' => $this->usersManager->getCurrentOnlineCount(1),
+            '15' => $this->usersManager->getCurrentOnlineCount(15),
+            '60' => $this->usersManager->getCurrentOnlineCount(60)
         )));
     }
-
-    private function simpleResponse($response) {
-        if ($response instanceof \App\Model\WallError) {
-            $this->sendResponse(new JsonResponse(array('response' => $response->errorType, 'message' => $response->errorMessage)));
-        } else {
-            $this->sendResponse(new JsonResponse(array('response' => 'success')));
-        }
-    }
-
 }

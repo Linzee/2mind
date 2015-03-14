@@ -104,34 +104,34 @@ $.fn.twoMinDinfiniteMover = function (settingsIn) {
 
     if (settings.mousewheelEnabled) {
         $(document).bind('mousewheel', function (e) {
-            
+
             var dx = Math.min(Math.abs(e.deltaX / 50), 1.0);
             var dy = Math.min(Math.abs(e.deltaY / 50), 1.0);
-            
+
             if (e.deltaX < 0) {
                 dx *= -1;
             }
             if (e.deltaY < 0) {
                 dy *= -1;
             }
-            
+
             var pos = settings.target.position();
-            
+
             settings.target.css({
                 top: pos.top + e.deltaY * settings.mousewheelMoveSpeed,
                 left: pos.left + e.deltaX * settings.mousewheelMoveSpeed
             });
-            
+
             settings.target.trigger("holderMoved", [false]);
         });
     }
 
     $(document).keydown(function (e) {
 
-        if($("input:focus").size() === 0) {
+        if ($("input:focus").size() === 0) {
 
             var pos = settings.target.position();
-            
+
             switch (e.which) {
                 case 37: // left
                     settings.target.css({
@@ -147,13 +147,13 @@ $.fn.twoMinDinfiniteMover = function (settingsIn) {
 
                 case 39: // right
                     settings.target.css({
-                        left: pos.left + ( -1 * settings.arrowKeysSpeed)
+                        left: pos.left + (-1 * settings.arrowKeysSpeed)
                     });
                     break;
 
                 case 40: // down
                     settings.target.css({
-                        top: pos.top + ( -1 * settings.arrowKeysSpeed)
+                        top: pos.top + (-1 * settings.arrowKeysSpeed)
                     });
                     break;
 
@@ -162,7 +162,7 @@ $.fn.twoMinDinfiniteMover = function (settingsIn) {
             }
 
         }
-        
+
         settings.target.trigger("holderMoved", [false]);
     });
 };

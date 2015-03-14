@@ -6,6 +6,7 @@ class CurrentUser {
 
     /** @var \Nette\Database\Context */
     private $database;
+
     /** @var \Nette\Security\User */
     private $user;
     private $id;
@@ -17,22 +18,22 @@ class CurrentUser {
         $this->database = $database;
         $this->user = $user;
 
-        if($user->isLoggedIn()) {
+        if ($user->isLoggedIn()) {
             $this->id = $user->id;
         } else {
             $this->id = $session->id;
         }
-        
+
         $this->data = $this->database->table('wall_users')->get($this->id);
         if (!$this->data) {
             $this->data = (object) array(
-                'background' => '',
-                'color' => $this->selectRandomColor()
+                        'background' => '',
+                        'color' => $this->selectRandomColor()
             );
             $this->falseData = true;
         }
     }
-    
+
     private function createUser() {
         if (!$this->data || $this->falseData) {
             $this->database->table('wall_users')->insert(array(
@@ -46,7 +47,7 @@ class CurrentUser {
             $this->color = $this->selectRandomColor();
         }
     }
-    
+
     public function getId() {
         return $this->id;
     }
@@ -76,12 +77,13 @@ class CurrentUser {
             'pos_y' => $y
         ));
     }
-    
+
     public function selectRandomColor() {
         return 'FFFFFF';
     }
-    
+
     public function isModerator() {
         return $this->user->isLoggedIn() && $this->moderator;
     }
+
 }

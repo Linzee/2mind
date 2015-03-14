@@ -7,11 +7,10 @@ use Nette\Application\IResponse;
 class LatestPosts implements IResponse {
 
     private static $fieldsToCopy;
-    
     private $areBlocks;
     private $posts;
     private $now;
-    
+
     /**
      * @param  array|\stdClass  payload
      * @param  string    MIME content type
@@ -20,8 +19,8 @@ class LatestPosts implements IResponse {
         $this->areBlocks = $areBlocks;
         $this->posts = $posts;
         $this->now = $now;
-        
-        if($areBlocks) {
+
+        if ($areBlocks) {
             self::$fieldsToCopy = array('block_x', 'block_y', 'title', 'description');
         } else {
             self::$fieldsToCopy = array('id', 'block_x', 'block_y', 'local_x', 'local_y', 'deleted', 'content');
@@ -31,22 +30,22 @@ class LatestPosts implements IResponse {
     public function areBlocks() {
         return $this->areBlocks;
     }
-    
+
     public function getPosts() {
         return $this->posts;
     }
 
     public function getFormatedPosts() {
         $formatedPosts = array();
-        
-        foreach($this->posts as $post) {
+
+        foreach ($this->posts as $post) {
             $formatedPost = array();
-            foreach(self::$fieldsToCopy as $field) {
+            foreach (self::$fieldsToCopy as $field) {
                 $formatedPost[$field] = $post->$field;
             }
             $formatedPosts[] = $formatedPost;
         }
-        
+
         return $formatedPosts;
     }
 
@@ -57,16 +56,16 @@ class LatestPosts implements IResponse {
     public function send(\Nette\Http\IRequest $httpRequest, \Nette\Http\IResponse $httpResponse) {
 
         $formatedWallPosts = $this->getFormatedPosts();
-        
+
         $response = array();
-        
+
         $response['now'] = $this->now;
         $response['areBlocks'] = $this->areBlocks;
-        
-        if(count($formatedWallPosts) > 0) {
+
+        if (count($formatedWallPosts) > 0) {
             $response['posts'] = $formatedWallPosts;
         }
-        
+
         $httpResponse->setContentType('application/json');
         $httpResponse->setExpiration(FALSE);
         echo \Nette\Utils\Json::encode($response);

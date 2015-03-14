@@ -9,15 +9,15 @@ use Nette\Utils\Validators,
  * Map presenter = everything in this something.
  */
 class MapPresenter extends BasePresenter {
-    
+
     /** @inject @var \App\Model\Wall */
     public $wall;
-    
+
     public function renderMap($x1, $y1, $x2, $y2, $lastUpdate = null) {
 
         if (Validators::isNumericInt($x1) && Validators::isNumericInt($y1) && Validators::isNumericInt($x2) && Validators::isNumericInt($y2)) {
             if ($this->isAjax() || $this->allowWithoutAjax) {
-                
+
                 $map = $this->wall->loadMap($x1, $y1, $x2, $y2, $lastUpdate);
 
                 $this->sendResponse($map);
@@ -28,11 +28,11 @@ class MapPresenter extends BasePresenter {
             throw new \Nette\InvalidArgumentException("Argumets are missing");
         }
     }
-    
+
     public function renderSearch($search) {
 
         if ($this->isAjax() || $this->allowWithoutAjax) {
-            
+
             $searchResult = $this->wall->search($search);
 
             if ($searchResult instanceof \App\Model\WallError) {
@@ -42,14 +42,6 @@ class MapPresenter extends BasePresenter {
             }
         } else {
             throw new \Nette\Application\ForbiddenRequestException("Only avaleible trought ajax.");
-        }
-    }
-
-    private function simpleResponse($response) {
-        if ($response instanceof \App\Model\WallError) {
-            $this->sendResponse(new JsonResponse(array('response' => $response->errorType, 'message' => $response->errorMessage)));
-        } else {
-            $this->sendResponse(new JsonResponse(array('response' => 'success')));
         }
     }
 

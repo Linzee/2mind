@@ -8,7 +8,7 @@
     <div id="wall">
         <div class="blocks-holder-mover"></div>
         <div class="blocks-holder cross">
-            
+
         </div>
         {include ../endora.latte}
     </div>
@@ -26,9 +26,9 @@
 <script src="{$basePath}/js/2minD/infiniteMover.js"></script>
 <script src="{$basePath}/js/2minD/actions.js"></script>
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         blocksHolder.twoMinDmap({
-            ajax_url: {$basePath} + "/map/"
+            ajax_url: {$basePath}
         });
         $('.blocks-holder-mover').twoMinDinfiniteMover({
             target: blocksHolder
@@ -38,6 +38,6 @@
             spawnToCenter: true
         });
     });
-    
+
 </script>
 {/block}

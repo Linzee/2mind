@@ -3,7 +3,7 @@ $.fn.twoMinDmap = function (settingsIn) {
     var blocksHolder = this;
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain + '/map/',
+        ajax_url: 'http://' + document.domain,
         speed: 2000,
         template: '<div class="map-block">' +
                 '<div class="block-info">' +
@@ -42,7 +42,7 @@ $.fn.twoMinDmap = function (settingsIn) {
 
         latestRange = range;
 
-        var url = settings.ajax_url + "map?lastUpdate=" + latestUpdateTime + '&x1=' + range[0] + '&y1=' + range[1] + '&x2=' + range[3] + '&y2=' + range[3];
+        var url = settings.ajax_url + "/map/map?lastUpdate=" + latestUpdateTime + '&x1=' + range[0] + '&y1=' + range[1] + '&x2=' + range[3] + '&y2=' + range[3];
 
         $.ajax({
             url: url,

@@ -3,17 +3,17 @@
 namespace App\Presenters;
 
 class UserPresenter extends BasePresenter {
-    
+
     /** @var \App\TwoMinD\Forms\SignUpForm @inject */
     public $signUpFormFactory;
-    
+
     //sign in form is defined in base presenter
 
     protected function createComponentSignUpForm() {
         $form = $this->signUpFormFactory->create();
 
         $presenter = $this;
-        
+
         $form->onSuccess[] = function (\Nette\Application\UI\Form $form) use ($presenter) {
             if ($presenter->signUpFormFactory->signUpResponse == 'FAIL') {
                 $presenter->flashMessage('Somethign went wrong! Please try other info or try again later.', 'alert');

@@ -3,11 +3,10 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
     var blocksHolder = this;
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain + '/map/',
+        ajax_url: 'http://' + document.domain,
         speed: 400,
         template_block: '<div class="block"></div>',
         template_post: '<p class="post"><span></span><a href="#" class="reply">Reply</a></p>',
-        template_renew: '<a href="#" class="renew">Renew</a>',
         range: 1,
         moderator: false
     }, settingsIn);
@@ -23,7 +22,7 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
             includeDeleted = '1';
         }
 
-        var url = settings.ajax_url + "block?x=" + block.x + "&y=" + block.y + "&lastUpdate=" + block.lastUpdate + "&includeDeleted=" + includeDeleted;
+        var url = settings.ajax_url + "/wall/block?x=" + block.x + "&y=" + block.y + "&lastUpdate=" + block.lastUpdate + "&includeDeleted=" + includeDeleted;
 
         $.ajax({
             url: url,
@@ -119,12 +118,12 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
                 postsElement.append(postEl);
                 newEl = true;
             }
-            
+
             if (newEl) { //it isnt possible to change later, so dont update this stuff:
                 if (post.parent) {
-                    
+
                     postEl.hide(); //fix for missing parent posts
-                    
+
                     var parentId = "#post_" + post.parent;
                     var parentEl = postsElement.find(parentId);
 
@@ -149,7 +148,7 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
                 }
             } else {
                 postEl.find('span').text(post.content);
-                
+
                 if (!post.parent) {
                     if (postEl.parent().hasClass('post-group')) {
                         postEl.parent().css({
@@ -177,17 +176,16 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
                         color: '#000'
                     });
                 }
-                
+
                 if (postEl.height() <= 26) {
                     postEl.css({
                         'white-space': 'nowrap'
                     });
                 }
-                
+
                 //moderator
-                if(settings.moderator && post.deleted) {
+                if (settings.moderator && post.deleted) {
                     postEl.addClass('deleted');
-                    postEl.append(settings.template_renew);
                 }
             }
 
@@ -198,7 +196,7 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
             }
         });
     };
-    
+
     var connectParentPost = function (thisPost, parentPost) {
 
         //create post group if it doesnt exist
@@ -292,9 +290,9 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
     }, settings.speed);
 
     //draggable fix.. its so annoying!
-    blocksHolder.click(function() {
+    blocksHolder.click(function () {
         document.getSelection().removeAllRanges();
-        
+
         $("input:focus").blur();
     });
 

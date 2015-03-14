@@ -9,15 +9,11 @@ class User implements IResponse {
     private static $fieldsToCopy;
     private $user;
 
-    /**
-     * @param  array|\stdClass  payload
-     * @param  string    MIME content type
-     */
     public function __construct($user) {
 
         $this->user = $user;
 
-        self::$fieldsToCopy = array('id', 'color', 'moderator');
+        self::$fieldsToCopy = array('id', 'color', 'created', 'last_update', 'email', 'moderator', 'verified', 'pos_x', 'pos_y');
     }
 
     public function getUser() {
@@ -29,7 +25,7 @@ class User implements IResponse {
         if (!$this->user) {
             return FALSE;
         }
-        
+
         $formatedUser = array();
         foreach (self::$fieldsToCopy as $field) {
             $formatedUser[$field] = $this->user->$field;

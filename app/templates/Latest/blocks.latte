@@ -10,7 +10,7 @@
     </header>
     <h3 class="page-title">{_}Najnovšie témy{/_}:</h3>
     <ul class="latest-posts posts-list">
-        
+
     </ul>
     {include ../endora.latte}
 </section>
@@ -21,9 +21,9 @@
 {include parent}
 <script src="{$basePath}/js/2minD/latest.js"></script>
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         $('.latest-posts').twoMinDlatest({
-            ajax_url: {$basePath} + "/latest/",
+            ajax_url: {$basePath},
             blocks: true
         });
     });

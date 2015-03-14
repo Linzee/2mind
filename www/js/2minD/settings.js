@@ -3,7 +3,7 @@ $.fn.twoMinDsettings = function (utils, settingsIn) {
     var settingsForm = this;
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain + '/wall/',
+        ajax_url: 'http://' + document.domain,
         template_color: '<a href="#" class="color"></a>'
     }, settingsIn);
 
@@ -15,7 +15,7 @@ $.fn.twoMinDsettings = function (utils, settingsIn) {
 
         var newColor = settingsForm.find(".posts-color .color-field").val();
         var newBackground = settingsForm.find(".background-color .color-field").val();
-        
+
         saveColor(newColor, newBackground);
         updateBackground(newBackground);
 
@@ -28,7 +28,7 @@ $.fn.twoMinDsettings = function (utils, settingsIn) {
 
         color = color.substring(1);
 
-        var url = settings.ajax_url + "changeColor?color=" + encodeURIComponent(color) + '&background=' + encodeURIComponent(background);
+        var url = settings.ajax_url + "/wall/changeColor?color=" + encodeURIComponent(color) + '&background=' + encodeURIComponent(background);
 
         $.ajax({
             url: url,

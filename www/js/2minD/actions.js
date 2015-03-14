@@ -1,7 +1,7 @@
 $.fn.twoMinDactions = function (utils, settingsIn) {
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain + '/wall/',
+        ajax_url: 'http://' + document.domain,
         block_size: 2100
     }, settingsIn);
 
@@ -136,7 +136,7 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
                     return false;
                 }
 
-                var url = settings.ajax_url + "add?block_x=" + block_pos[0] + "&block_y=" + block_pos[1] + "&x=" + local_pos[0] + "&y=" + local_pos[1] + "&content=" + content;
+                var url = settings.ajax_url + "/wall/add?block_x=" + block_pos[0] + "&block_y=" + block_pos[1] + "&x=" + local_pos[0] + "&y=" + local_pos[1] + "&content=" + content;
 
                 if (replyTo) {
                     url = url + '&parent=' + replyTo;
@@ -224,7 +224,7 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
 
     var performSearch = function (search) {
 
-        var url = settings.ajax_url + "search?search=" + encodeURIComponent(search);
+        var url = settings.ajax_url + "/wall/search?search=" + encodeURIComponent(search);
 
         $.ajax({
             url: url,
@@ -272,7 +272,7 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
             action: false,
             blocksHolder: $(".blocks-holder")
         }, settingsIn);
-        
+
         if (settings.action) {
             //find correct action and run it
             $.each(actions, function (action, actionFunction) {

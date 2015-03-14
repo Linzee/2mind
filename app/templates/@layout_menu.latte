@@ -43,17 +43,15 @@
                         <li><a n:href="Latest:">{_}Najnovšie správy{/_}</a></li>
                         <li><a n:href="Latest:blocks">{_}Najnovšie témy{/_}</a></li>
                         <li><label>Akcie</label></li>
-                        <li class="has-submenu">
-                            <a href="#">Online (<span class="online-counter">{$online}</span>)</a>
-                            <ul class="right-submenu">
-                                <li class="back"><a href="#">Back</a></li>
-                                <li>Test</li>
-                            </ul>
-                        </li>
                         <li><a class="settings" href="#"><span class="icon settings"></span>{_}Nastavenia{/_}</a></li>
                         <li><a class="fullscreen" href="#"><span class="icon fullscreen"></span>{_}Na celú obrazovku{/_}</a></li>
                         <li><a n:href="Wall:random empty">{_}Náhodný prázdny štvorec{/_}</a></li>
                         <li><a n:href="Wall:random full">{_}Náhodný zaplnený štvorec{/_}</a></li>
+
+                        {if $currentUser->isModerator()}
+                            <li><label>Moderator</label></li>
+                            <li><a class="online" href="#">Online (<span class="online-counter">{$online}</span>)</a></li>
+                            {/if}
                     </ul>
                 </aside>
                 {/block}
@@ -78,6 +76,48 @@
                     <a class="close-reveal-modal">&#215;</a>
                 </div>
 
+                {if $currentUser->isModerator()}
+                    <div id="usersReveal" class="reveal-modal medium" data-reveal>
+                        <h2>Pouzivatelia:</h2>
+                        <ul class="users-list">
+
+                        </ul>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+
+                    <div id="userReveal" class="reveal-modal medium" data-reveal>
+                        <h2 class="id"></h2>
+                        <ul class="no-bullet">
+                            <li>Color: <span class="color"></span></li>
+                            <li>Created: <span class="created"></span></li>
+                            <li>Last update: <span class="last_update"></span></li>
+                            <li>Email: <span class="email"></span></li>
+                            <li>Moderator: <span class="moderator"></span></li>
+                            <li>Verified: <span class="verified"></span></li>
+                            <li>X: <span class="pos_x"></span></li>
+                            <li>Y: <span class="pos_y"></span></li>
+                        </ul>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+
+                    <div id="postReveal" class="reveal-modal medium" data-reveal>
+                        <h2 class="id"></h2>
+                        <ul class="no-bullet">
+                            <li>Autor: <span class="user"></span> (#<span class="color"></span>)</li>
+                            <li>Creaated: <span class="created"></span></li>
+                            <li>Last change: <span class="last_change"></span></li>
+                            <li>Parent: <span class="parent"></span></li>
+                            <li>Content: <span class="content"></span></li>
+                            <li>Deleted: <span class="deleted"></span></li>
+                            <li>Block x: <span class="block_x"></span></li>
+                            <li>Block y: <span class="block_y"></span></li>
+                            <li>X: <span class="local_x"></span></li>
+                            <li>Y: <span class="local_y"></span></li>
+                        </ul>
+                        <a class="close-reveal-modal">&#215;</a>
+                    </div>
+                {/if}
+
                 <!-- close the off-canvas menu -->
                 <a class="exit-off-canvas"></a>
             </div>
@@ -97,7 +137,8 @@
         <script src="{$basePath}/js/2minD/settings.js"></script>
         <script type="text/javascript">
             var baseSettings = {
-                ajax_url: {$basePath} + "/wall/"
+                ajax_url: {$basePath},
+                moderator: {$currentUser->isModerator() ? 'true' : 'false'}
             };
             var blocksHolder = $('.blocks-holder');
             var utils = new twoMinDutils({
@@ -117,6 +158,21 @@
                 action: 'fullscreen'
             });
         </script>
+
+        {if $currentUser->isModerator()}
+            <script src="{$basePath}/js/2minD/moderatorActions.js"></script>
+            <script src="{$basePath}/js/2minD/moderator.js"></script>
+            <script type="text/javascript">
+
+            blocksHolder.twoMinDmoderatorActions(utils, baseSettings);
+
+            $('.right-off-canvas-menu .online').twoMinDmoderatorAction({
+                action: 'online'
+            });
+
+            </script>
+        {/if}
+
         {/block}
     </body>
 </html>

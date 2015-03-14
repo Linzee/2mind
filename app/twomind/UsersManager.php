@@ -23,14 +23,14 @@ class UsersManager implements \Nette\Security\IAuthenticator {
     }
 
     public function users() {
-        return new App\Response\Users(getCurrentOnlineUsers());
+        return new \App\TwoMinD\Response\Users($this->getCurrentOnlineUsers());
     }
 
     public function user($id) {
 
         $user = $this->database->table('wall_users')->get($id);
 
-        return new App\Response\User($user);
+        return new \App\TwoMinD\Response\User($user);
     }
 
     /**

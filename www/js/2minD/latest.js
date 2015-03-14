@@ -3,7 +3,7 @@ $.fn.twoMinDlatest = function (settingsIn) {
     var latestHolder = this;
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain + '/latest/',
+        ajax_url: 'http://' + document.domain,
         speed: 9000,
         limit: false,
         blocks: false,
@@ -37,7 +37,7 @@ $.fn.twoMinDlatest = function (settingsIn) {
             includeDeleted = '1';
         }
 
-        var url = settings.ajax_url + "latest?lastUpdate=" + latestUpdateTime + "&includeDeleted=" + includeDeleted;
+        var url = settings.ajax_url + "/latest/latest?lastUpdate=" + latestUpdateTime + "&includeDeleted=" + includeDeleted;
 
         if (settings.limit) {
             url = url + '&limit=' + settings.limit;
