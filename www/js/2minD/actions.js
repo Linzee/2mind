@@ -147,7 +147,7 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
                     dataType: 'json'
                 }).done(function (data) {
                     if (data.response !== 'success') {
-                        utils.showMessage('Nastal problem!', '(' + data.response + ') ' + data.message);
+                        utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
                     }
                 });
 
@@ -203,7 +203,7 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
 
                 searchResults.append(
                         '<li>' +
-                        '<a href="wall/#' + goToId + '" class="block-title">' + block.title +
+                        '<a href="#' + goToId + '" class="block-title">' + block.title +
                         '<span class="coord"> [' + block.block_x + ', ' + block.block_y + '] </span>' +
                         '<div class="block-description">' + block.description + '</div></a>' +
                         '</li>');
@@ -212,7 +212,12 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
         } else {
             searchResults.append("<li>Neboli nájdene žiadne témy.</li>");
         }
-        
+
+        searchResults.find('a').click(function () {
+            setTimeout(updateHashLocation, 100);
+            $("#searchReveal").foundation('reveal', 'close');
+        });
+
         $("#searchReveal").foundation('reveal', 'open');
 
     };

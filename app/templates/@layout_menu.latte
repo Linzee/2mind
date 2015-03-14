@@ -12,16 +12,16 @@
 
         <link rel="stylesheet" media="all" href="{$basePath}/css/screen.css">
 
-        <!--<meta name="viewport" content="initial-scale=1" />-->
+        <meta name="viewport" content="initial-scale=1" />
 
         <link rel="shortcut icon" href="{$basePath}/favicon.ico">
         <script src="{$basePath}/js/modernizr.js"></script>
-        
+
         <meta name="author" content="Dominik Gmiterko">
         <link type="text/plain" rel="author" href="{$basePath}/humans.txt" />
         <meta name="description" content="{include pageDescription.latte}">
         <meta name="keywords" content="2d, forum, wall, online, relatime, discussion, rectangles">
-        
+
         {block head}{/block}
     </head>
 
@@ -36,11 +36,20 @@
                 <aside class="right-off-canvas-menu">
                     <ul class="off-canvas-list">
                         <li><label>{_}Menu{/_}</label></li>
-                        <li><a n:href="Title:"><sup>2</sup>min<sub>D</sub></a></li>
+                        <li><a n:href="Title:"><sup>2</sup>min<sub>D</sub>
+                                {if $user->isLoggedIn()} - {$user->id}{/if}
+                            </a></li>
                         <li><a n:href="Map:">{_}Mapa{/_}</a></li>
                         <li><a n:href="Latest:">{_}Najnovšie správy{/_}</a></li>
                         <li><a n:href="Latest:blocks">{_}Najnovšie témy{/_}</a></li>
                         <li><label>Akcie</label></li>
+                        <li class="has-submenu">
+                            <a href="#">Online (<span class="online-counter">{$online}</span>)</a>
+                            <ul class="right-submenu">
+                                <li class="back"><a href="#">Back</a></li>
+                                <li>Test</li>
+                            </ul>
+                        </li>
                         <li><a class="settings" href="#"><span class="icon settings"></span>{_}Nastavenia{/_}</a></li>
                         <li><a class="fullscreen" href="#"><span class="icon fullscreen"></span>{_}Na celú obrazovku{/_}</a></li>
                         <li><a n:href="Wall:random empty">{_}Náhodný prázdny štvorec{/_}</a></li>
@@ -94,10 +103,10 @@
             var utils = new twoMinDutils({
                 blocksHolder: blocksHolder
             });
-            
+
             $(".settings-form").twoMinDsettings(utils, baseSettings);
             blocksHolder.twoMinDactions(utils, baseSettings);
-            
+
             $('header .icon-list .search').twoMinDaction({
                 action: 'search_button'
             });

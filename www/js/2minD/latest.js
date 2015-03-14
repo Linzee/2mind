@@ -107,9 +107,9 @@ $.fn.twoMinDlatest = function (settingsIn) {
                 postEl.find('.coord').text(' [' + post.block_x + ', ' + post.block_y + '] ');
 
                 if (settings.blocks) {
-                    postEl.find('a').attr('href', 'wall#block_' + post.block_x + '_' + post.block_y);
+                    postEl.find('a').attr('href', '../wall#block_' + post.block_x + '_' + post.block_y);
                 } else {
-                    postEl.find('a').attr('href', 'wall#block_' + post.block_x + '_' + post.block_y + '_' + post.local_x + '_' + post.local_y);
+                    postEl.find('a').attr('href', '../wall#block_' + post.block_x + '_' + post.block_y + '_' + post.local_x + '_' + post.local_y);
                 }
 
                 if (newEl) {

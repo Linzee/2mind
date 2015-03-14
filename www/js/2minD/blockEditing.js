@@ -108,7 +108,7 @@ $.fn.twoMinDblockEditing = function (utils, settingsIn) {
             dataType: 'json'
         }).done(function (data) {
             if (data.response !== 'success') {
-                utils.showMessage('Nastal problem!', '(' + data.response + ') ' + data.message);
+                utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
             }
         });
     });

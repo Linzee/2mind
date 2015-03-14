@@ -2,8 +2,8 @@ parameters:
 
 
 database:
-	dsn: 'mysql:host=127.0.0.1;dbname=2mind'
-	user: ja
-	password:
+	dsn: 'mysql:host=localhost;dbname=2mind'
+	user: ienze
+	password: 
 	options:
 		lazy: yes

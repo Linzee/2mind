@@ -1,8 +1,28 @@
 {block content}
 <section class="fullpage-min title-bg">
     <h1 class="logo"><a n:href="Title:"><sup>2</sup><span class="anim">min</span><sub>D</sub></a></h1>
-    <a n:href="Wall:" class="button large">{_}Vstúpiť{/_}</a>
-    <p>{include ../pageDescription.latte}</p>
+    <div class="row">
+        <div class="small-12 medium-6 columns">
+            <a n:href="Wall:" class="button large expand">{_}Vstúpiť{/_}</a>
+            <p>{include ../pageDescription.latte}</p>
+        </div>
+        <div class="small-12 medium-6 columns">
+            <h3>Prihlásenie</h3>
+            
+            {if $user->isLoggedIn()}
+            
+                <p>Ste prihlaseny ako {$user->id}</p>
+                <p><a n:href="User:logout">Odhlasit</a></p>
+                
+            {else}
+            
+                {include '../components/form.latte', form => signInForm}
+                <a class="button expand" n:href="User:register">Registrácia</a>
+                
+            {/if}
+            
+        </div>
+    </div>
     {include ../titleFooter.latte}
     {include ../endora.latte}
 </section>

@@ -7,7 +7,9 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
         speed: 400,
         template_block: '<div class="block"></div>',
         template_post: '<p class="post"><span></span><a href="#" class="reply">Reply</a></p>',
-        range: 1
+        template_renew: '<a href="#" class="renew">Renew</a>',
+        range: 1,
+        moderator: false
     }, settingsIn);
 
     var updating = false;
@@ -17,7 +19,7 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
         updating = true;
 
         var includeDeleted = '0';
-        if (block.lastUpdate !== 0) {
+        if (block.lastUpdate !== 0 || settings.moderator) {
             includeDeleted = '1';
         }
 
@@ -140,14 +142,14 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
                 }
             }
 
-            if (post.deleted) {
+            if (post.deleted && !settings.moderator) {
                 if (postEl.size()) {
                     blocksHolder.trigger("postRemoved", [postEl]);
                     postEl.remove();
                 }
             } else {
                 postEl.find('span').text(post.content);
-
+                
                 if (!post.parent) {
                     if (postEl.parent().hasClass('post-group')) {
                         postEl.parent().css({
@@ -180,6 +182,12 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
                     postEl.css({
                         'white-space': 'nowrap'
                     });
+                }
+                
+                //moderator
+                if(settings.moderator && post.deleted) {
+                    postEl.addClass('deleted');
+                    postEl.append(settings.template_renew);
                 }
             }
 

@@ -19,8 +19,20 @@ nette:
     session:
         autoStart: true	
         expiration: 14 days
+    routing:
+        debugger: true  # panel v Debugger baru
+        routes:
+            'plocha': 'Wall:default'
+            'mapa': 'Map:default'
+            'najnovsie': 'Latest:default'
+            'najnovsie/temy': 'Latest:blocks'
+            'kontakt': 'Contact:default'
+            'ostranke': 'About:default'
+            '<presenter>/<action>': 'Title:default'
 
 services:
-    - App\RouterFactory
-    - App\Model\Wall
-    router: @App\RouterFactory::createRouter
+    - App\TwoMinD\Wall
+    - App\TwoMinD\CurrentUser
+    - App\TwoMinD\UsersManager
+    - App\TwoMinD\Forms\SignInForm
+    - App\TwoMinD\Forms\SignUpForm

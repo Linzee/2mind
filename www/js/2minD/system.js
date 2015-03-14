@@ -17,7 +17,7 @@ $.fn.twoMinDsystem = function (utils, settingsIn) {
         }).done(function (data) {
 
             if(data.online) {
-                $(".social.online .count").text(data.online);
+                $(".online-counter").text(data.online);
             }
             if(data.forceReload) {
                 location.reload();

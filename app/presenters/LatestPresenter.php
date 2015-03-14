@@ -7,7 +7,7 @@ namespace App\Presenters;
  */
 class LatestPresenter extends BasePresenter {
     
-    /** @inject @var \App\Model\Wall */
+    /** @inject @var \App\TwoMinD\Wall */
     public $wall;
 
     public function renderDefault() {

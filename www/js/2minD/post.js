@@ -20,7 +20,7 @@ $.fn.twoMinDpost = function (utils, settingsIn) {
             dataType: 'json'
         }).done(function (data) {
             if (data.response !== 'success') {
-                utils.showMessage('Nastal problem!', '(' + data.response + ') ' + data.message);
+                utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
             }
         });
 
@@ -35,7 +35,22 @@ $.fn.twoMinDpost = function (utils, settingsIn) {
             dataType: 'json'
         }).done(function (data) {
             if (data.response !== 'success') {
-                utils.showMessage('Nastal problem!', '(' + data.response + ') ' + data.message);
+                utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
+            }
+        });
+
+    };
+    
+    var renewPost = function (id) {
+
+        var url = settings.ajax_url + "renew?id=" + id;
+
+        $.ajax({
+            url: url,
+            dataType: 'json'
+        }).done(function (data) {
+            if (data.response !== 'success') {
+                utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
             }
         });
 
@@ -211,6 +226,11 @@ $.fn.twoMinDpost = function (utils, settingsIn) {
         post.mousedown(function () {
             $(".post").removeClass("selected");
             $(this).addClass("selected");
+        });
+        
+        post.find('.renew').mousedown(function () {
+            var postId = post.attr("id").substring(5);
+            renewPost(postId);
         });
     });
 

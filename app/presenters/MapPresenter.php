@@ -10,15 +10,8 @@ use Nette\Utils\Validators,
  */
 class MapPresenter extends BasePresenter {
     
-    private $allowWithoutAjax = false;
-
     /** @inject @var \App\Model\Wall */
     public $wall;
-    
-    protected function beforeRender() {
-        parent::beforeRender();
-        $this->allowWithoutAjax = $this->context->parameters['debugMode'] ? true : false;
-    }
     
     public function renderMap($x1, $y1, $x2, $y2, $lastUpdate = null) {
 

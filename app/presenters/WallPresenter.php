@@ -12,18 +12,11 @@ use Nette\Utils\Validators,
  */
 class WallPresenter extends BasePresenter {
 
-    private $allowWithoutAjax = false;
-
-    /** @inject @var \App\Model\Wall */
+    /** @inject @var \App\TwoMinD\Wall */
     public $wall;
 
-    protected function beforeRender() {
-        parent::beforeRender();
-        $this->allowWithoutAjax = $this->context->parameters['debugMode'] ? true : false;
-    }
-
     public function renderDefault() {
-        $this->template->online = $this->currentUser->getCurrentOnlineCount();
+        $this->template->online = $this->usersManager->getCurrentOnlineCount();
     }
 
     public function renderSystem($x, $y) {
@@ -122,6 +115,27 @@ class WallPresenter extends BasePresenter {
         }
     }
 
+    public function renderRenew($id) {
+
+        if (Validators::isNumericInt($id)) {
+            if ($this->isAjax() || $this->allowWithoutAjax) {
+
+                if (!$this->currentUser->isModerator()) {
+                    $this->simpleResponse(\App\Model\WallError::NO_MODERATOR);
+                    return;
+                }
+
+                $response = $this->wall->renew($id);
+
+                $this->simpleResponse($response);
+            } else {
+                throw new \Nette\Application\ForbiddenRequestException("Only avaleible trought ajax.");
+            }
+        } else {
+            throw new \Nette\InvalidArgumentException("Argumets are missing");
+        }
+    }
+
     public function renderSearch($search) {
 
         if ($this->isAjax() || $this->allowWithoutAjax) {
@@ -154,7 +168,7 @@ class WallPresenter extends BasePresenter {
             throw new \Nette\Application\ForbiddenRequestException("Only avaleible trought ajax.");
         }
     }
-
+    
     public function actionRandom($mode) {
 
         if ($mode == 'empty' || $mode == 'full') {
@@ -178,7 +192,6 @@ class WallPresenter extends BasePresenter {
             '15' => $this->currentUser->getCurrentOnlineCount(15),
             '60' => $this->currentUser->getCurrentOnlineCount(60)
         )));
-        
     }
 
     private function simpleResponse($response) {

@@ -70,7 +70,7 @@ $.fn.twoMinDmap = function (settingsIn) {
                 blockEl = createNewBlock(blockId);
             }
 
-            blockEl.find('.title a').attr('href', 'wall#block_' + block.block_x + "_" + block.block_y)
+            blockEl.find('.title a').attr('href', '../wall#block_' + block.block_x + "_" + block.block_y)
             blockEl.find('.title a').text(block.title);
             blockEl.find('.description').text(block.description);
             blockEl.find('.coords').text('[' + block.block_x + ", " + block.block_y + ']');
