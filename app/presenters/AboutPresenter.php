@@ -2,6 +2,9 @@
 
 namespace App\Presenters;
 
+/**
+ * @author Ienze
+ */
 class AboutPresenter extends BasePresenter {
 
     public function renderDefault() {

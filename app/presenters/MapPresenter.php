@@ -2,15 +2,14 @@
 
 namespace App\Presenters;
 
-use Nette\Utils\Validators,
-    Nette\Application\Responses\JsonResponse;
+use Nette\Utils\Validators;
 
 /**
- * Map presenter = everything in this something.
+ * @author Ienze
  */
 class MapPresenter extends BasePresenter {
 
-    /** @inject @var \App\Model\Wall */
+    /** @inject @var \App\TwoMinD\Wall */
     public $wall;
 
     public function renderMap($x1, $y1, $x2, $y2, $lastUpdate = null) {
@@ -35,7 +34,7 @@ class MapPresenter extends BasePresenter {
 
             $searchResult = $this->wall->search($search);
 
-            if ($searchResult instanceof \App\Model\WallError) {
+            if ($searchResult instanceof \App\TwoMinD\WallError) {
                 $this->simpleResponse($searchResult);
             } else {
                 $this->sendResponse($searchResult);

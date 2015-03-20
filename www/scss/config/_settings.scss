@@ -45,10 +45,10 @@ $include-html-global-classes: true;
 // We use these to control various global styles
 // $body-bg: #fff;
 // $body-font-color: #222;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-$font-weight-normal:normal;
-$body-font-weight: $font-weight-normal;
-// $body-font-style: normal;
+ $body-font-family: "Lato", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+ $font-weight-normal: normal;
+ $body-font-weight: $font-weight-normal;
+ $body-font-style: normal;
 
 // We use this to control font-smoothing
 // $font-smoothing: antialiased;
@@ -59,7 +59,7 @@ $body-font-weight: $font-weight-normal;
 // $default-float: left;
 
 // We use these as default colors throughout
-$primary-color: #FF9933;
+$primary-color: #F93;
 // $secondary-color: #e7e7e7;
 // $alert-color: #f04124;
 // $success-color: #43AC6A;
@@ -67,7 +67,7 @@ $primary-color: #FF9933;
 // $info-color: #a0d3e8;
 
 // We use these to make sure border radius matches unless we want it different.
-// $global-radius: 3px;
+ $global-radius: 8px;
 // $global-rounded: 1000px;
 
 // We use these to control inset shadow shiny edges and depressions.
@@ -190,7 +190,7 @@ $primary-color: #FF9933;
 // $hr-border-width: 1px;
 // $hr-border-style: solid;
 // $hr-border-color: #ddd;
-// $hr-margin: rem-calc(20);
+ $hr-margin: rem-calc(12);
 
 // We use these to style lists
 // $list-font-family: $paragraph-font-family;

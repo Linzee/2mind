@@ -2,6 +2,9 @@
 
 namespace App\Presenters;
 
+/**
+ * @author Ienze
+ */
 class UserPresenter extends BasePresenter {
 
     /** @var \App\TwoMinD\Forms\SignUpForm @inject */

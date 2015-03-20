@@ -2,24 +2,25 @@
 <section class="fullpage-min title-bg">
     <h1 class="logo"><a n:href="Title:"><sup>2</sup><span class="anim">min</span><sub>D</sub></a></h1>
     <div class="row">
-        <div class="small-12 medium-6 columns">
+        <div class="small-12 medium-7 columns">
             <a n:href="Wall:" class="button large expand">{_}Vstúpiť{/_}</a>
             <p>{include ../pageDescription.latte}</p>
         </div>
-        <div class="small-12 medium-6 columns">
-            <h3>Prihlásenie</h3>
+        <div class="small-12 medium-5 columns">
 
-            {if $user->isLoggedIn()}
+            <div class="login-panel">
+                {if $user->isLoggedIn()}
 
-                <p>Ste prihlaseny ako {$user->id}</p>
-                <p><a n:href="User:logout">Odhlasit</a></p>
+                    <p>Ste prihlaseny ako {$user->id}</p>
+                    <p><a n:href="User:logout">Odhlasit</a></p>
 
-            {else}
+                {else}
 
-                {include '../components/form.latte', form => signInForm}
-                <a class="button expand" n:href="User:register">Registrácia</a>
+                    {include '../components/form.latte', form => signInForm}
+                    <a class="button expand" n:href="User:register">Registrácia</a>
 
-            {/if}
+                {/if}
+            </div>
 
         </div>
     </div>

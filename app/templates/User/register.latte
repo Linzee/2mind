@@ -1,12 +1,14 @@
 {block title}Registrácia{/block}
 
 {block content}
-<section class="fullpage title-bg">
-    <h2 class="logo"><a n:href="Title:"><sup>2</sup><span class="anim">min</span><sub>D</sub></a></h2>
+<section class="fullpage-min title-bg">
+    <div class="row">
+        <h2 class="logo"><a n:href="Title:"><sup>2</sup><span class="anim">min</span><sub>D</sub></a></h2>
 
-    {include '../components/form.latte', form => signUpForm}
+        {include '../components/form.latte', form => signUpForm}
 
-    {include ../titleFooter.latte}
-    {include ../endora.latte}
+        {include ../titleFooter.latte}
+        {include ../endora.latte}
+    </div>
 </section>
 {/block}

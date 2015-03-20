@@ -2,8 +2,9 @@
 
 namespace App\TwoMinD;
 
-use App\TwoMinD\CurrentUser;
-
+/**
+ * @author Ienze
+ */
 class WallSpamFilter extends \Nette\Object {
 
     const
@@ -14,12 +15,20 @@ class WallSpamFilter extends \Nette\Object {
     /** @var Nette\Database\Context */
     private $database;
 
-    /** @var Nette\Http\IRequest */
+    /** @var Nette\Http\Request */
     private $request;
 
-    public function __construct(\Nette\Database\Context $database, \Nette\Http\IRequest $httpRequest) {
+    /** @var \App\TwoMinD\UsersManager */
+    private $userManager;
+
+    /** @var \App\TwoMinD\CurrentUser */
+    public $currentUser;
+
+    public function __construct(\Nette\Database\Context $database, \Nette\Http\Request $request, \App\TwoMinD\UsersManager $userManager, \App\TwoMinD\CurrentUser $currentUser) {
         $this->database = $database;
-        $this->request = $httpRequest;
+        $this->request = $request;
+        $this->userManager = $userManager;
+        $this->currentUser = $currentUser;
 
         $this->sections = array(
             'block' => (object) array('id' => 1, 'limit' => 400), //TODO decrease and change way updates are send
@@ -57,9 +66,7 @@ class WallSpamFilter extends \Nette\Object {
             'se' => $sectionId
         ));
 
-        $banCount = $this->database->table('wall_ban')->where('ip', $ip)->count();
-
-        if ($banCount > 0) {
+        if ($this->userManager->isBanned($this->currentUser->getId(), $ip)) {
             return WallError::$BAN;
         }
 
@@ -70,10 +77,7 @@ class WallSpamFilter extends \Nette\Object {
         if ($queries->countGlobal > self::MAX_QUERY || (!$sectionConfig || $queries->countLocal > $sectionConfig->limit)) {
 
             if ($queries->countGlobal > self::MAX_QUERY * 1.4 || (!$sectionConfig || $queries->countLocal > $sectionConfig->limit * 1.4 )) {
-                $this->database->table('wall_ban')->insert(array(
-                    'ip' => $ip,
-                    'reason' => 'bandwidth'
-                ));
+                $this->userManager->ban($this->currentUser->getId(), $ip, 'bandwidth');
             }
 
             return WallError::$BANDWIDTH;

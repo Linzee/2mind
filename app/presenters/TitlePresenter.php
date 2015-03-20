@@ -2,11 +2,8 @@
 
 namespace App\Presenters;
 
-use Nette,
-    App\Model;
-
 /**
- * Title presenter.
+ * @author Ienze
  */
 class TitlePresenter extends BasePresenter {
 

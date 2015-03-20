@@ -4,6 +4,9 @@ namespace App\TwoMinD\Forms;
 
 use \Nette\Application\UI\Form;
 
+/**
+ * @author Ienze
+ */
 class SignInForm extends Form {
 
     /** @var Nette\Security\User */

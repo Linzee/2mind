@@ -6,20 +6,22 @@ use Nette,
     App\TwoMinD\Response\Block,
     App\TwoMinD\Response\Search,
     App\TwoMinD\Response\LatestPosts,
-    App\TwoMinD\Response\Map,
-    App\TwoMinD\WallSpamFilter;
+    App\TwoMinD\Response\Map;
 
+/**
+ * @author Ienze
+ */
 class Wall extends \Nette\Object {
 
     /** @var Nette\Database\Context */
     private $database;
 
-    /** @var \App\Model\WallSpamFilter */
+    /** @var App\TwoMinD\WallSpamFilter */
     private $wallSpamFilter;
 
-    public function __construct(\Nette\Database\Context $database, \Nette\Http\IRequest $request) {
+    public function __construct(\Nette\Database\Context $database, \App\TwoMinD\WallSpamFilter $wallSpamFilter) {
         $this->database = $database;
-        $this->wallSpamFilter = new WallSpamFilter($database, $request);
+        $this->wallSpamFilter = $wallSpamFilter;
     }
 
     public function loadBlock($x, $y, $lastUpdate, $includeDeleted) {
@@ -175,7 +177,7 @@ class Wall extends \Nette\Object {
         if ($post != null) {
 
             if (!$this->checkPosition($x, $y, $post->block_x, $post->block_y)) {
-                return new WallError::$WRONG_POS;
+                return WallError::$WRONG_POS;
             }
 
             return $post->update(array(
@@ -194,7 +196,8 @@ class Wall extends \Nette\Object {
         }
 
         if ($block_x == 0 && $block_y == 0) {
-            if ($x < 1500 && $y < 562) {
+            $cor = 2100 / 2 - 400 / 2;
+            if ($x > $cor && $y > $cor && $x < $cor + 400 && $y < $cor + 400) {
                 return false;
             }
         }
@@ -213,7 +216,7 @@ class Wall extends \Nette\Object {
 
         if ($post != null) {
             $post->update(array(
-                'deleted' => true
+                'deleted' => 1
             ));
         }
 
@@ -244,7 +247,7 @@ class Wall extends \Nette\Object {
         return true;
     }
 
-    private function removeChilds($parentId, $renew) {
+    private function removeChilds($parentId, $renew = false) {
 
         $childs = $this->database->table('wall_posts')->where('parent', $parentId);
 

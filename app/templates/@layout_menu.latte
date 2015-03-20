@@ -26,7 +26,7 @@
     </head>
 
     <body>
-        <div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+        <div n:foreach="$flashes as $flash" class="alert-box {$flash->type}">{$flash->message}</div>
 
         <div class="off-canvas-wrap" data-offcanvas>
 
@@ -77,45 +77,7 @@
                 </div>
 
                 {if $currentUser->isModerator()}
-                    <div id="usersReveal" class="reveal-modal medium" data-reveal>
-                        <h2>Pouzivatelia:</h2>
-                        <ul class="users-list">
-
-                        </ul>
-                        <a class="close-reveal-modal">&#215;</a>
-                    </div>
-
-                    <div id="userReveal" class="reveal-modal medium" data-reveal>
-                        <h2 class="id"></h2>
-                        <ul class="no-bullet">
-                            <li>Color: <span class="color"></span></li>
-                            <li>Created: <span class="created"></span></li>
-                            <li>Last update: <span class="last_update"></span></li>
-                            <li>Email: <span class="email"></span></li>
-                            <li>Moderator: <span class="moderator"></span></li>
-                            <li>Verified: <span class="verified"></span></li>
-                            <li>X: <span class="pos_x"></span></li>
-                            <li>Y: <span class="pos_y"></span></li>
-                        </ul>
-                        <a class="close-reveal-modal">&#215;</a>
-                    </div>
-
-                    <div id="postReveal" class="reveal-modal medium" data-reveal>
-                        <h2 class="id"></h2>
-                        <ul class="no-bullet">
-                            <li>Autor: <span class="user"></span> (#<span class="color"></span>)</li>
-                            <li>Creaated: <span class="created"></span></li>
-                            <li>Last change: <span class="last_change"></span></li>
-                            <li>Parent: <span class="parent"></span></li>
-                            <li>Content: <span class="content"></span></li>
-                            <li>Deleted: <span class="deleted"></span></li>
-                            <li>Block x: <span class="block_x"></span></li>
-                            <li>Block y: <span class="block_y"></span></li>
-                            <li>X: <span class="local_x"></span></li>
-                            <li>Y: <span class="local_y"></span></li>
-                        </ul>
-                        <a class="close-reveal-modal">&#215;</a>
-                    </div>
+                    {include moderatorReveals.latte}
                 {/if}
 
                 <!-- close the off-canvas menu -->
@@ -161,7 +123,6 @@
 
         {if $currentUser->isModerator()}
             <script src="{$basePath}/js/2minD/moderatorActions.js"></script>
-            <script src="{$basePath}/js/2minD/moderator.js"></script>
             <script type="text/javascript">
 
             blocksHolder.twoMinDmoderatorActions(utils, baseSettings);
@@ -169,7 +130,21 @@
             $('.right-off-canvas-menu .online').twoMinDmoderatorAction({
                 action: 'online'
             });
-
+            $('#userReveal .ban').twoMinDmoderatorAction({
+                action: 'userBan'
+            });
+            $('#userReveal .unban').twoMinDmoderatorAction({
+                action: 'userUnban'
+            });
+            $('#userReveal .removeAllPosts').twoMinDmoderatorAction({
+                action: 'userRemoveAllPosts'
+            });
+            $('#postReveal .remove').twoMinDmoderatorAction({
+                action: 'postRemove'
+            });
+            $('#postReveal .renew').twoMinDmoderatorAction({
+                action: 'postRenew'
+            });
             </script>
         {/if}
 

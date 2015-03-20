@@ -18,16 +18,6 @@
             <input type="number" class="semiedtable x" />
             <input type="number" class="semiedtable y" />
         </div>
-        <div id="blockInfo">
-            <div>
-                <input id="tutorial-title" type="text" class="semiedtable title" size="50"/>
-                <span style="font-size: 1.5rem" class="dynamic-width-input"></span>
-            </div>
-            <div>
-                <input type="text" class="semiedtable description" size="80"/>
-                <span style="font-size: 0.875rem" class="dynamic-width-input"></span>
-            </div>
-        </div>
         <ul class="icon-list">
             <li id="tutorial-search" class="search">
                 <form class="searchForm" method="post">
@@ -38,6 +28,16 @@
             <li class="icon spawn"><a href="#">{_}Začiatok{/_}</a></li>
             <li id="tutorial-menu" class="icon menu"><a class="right-off-canvas-toggle" href="#" >{_}Menu{/_}</a></li>
         </ul>
+        <div id="blockInfo">
+            <div>
+                <input id="tutorial-title" type="text" class="semiedtable title" placeholder="Nepomenovany" />
+                <span style="font-size: 1.5rem" class="dynamic-width-input"></span>
+            </div>
+            <div>
+                <input type="text" class="semiedtable description" placeholder="Nepomenovany" />
+                <span style="font-size: 0.875rem" class="dynamic-width-input"></span>
+            </div>
+        </div>
     </header>
     <footer>
         <span id="tutorial-delete" class="icon delete"><a href="#" >{_}Odstrániť{/_}</a></span>
@@ -109,19 +109,24 @@
 
 <script type="text/javascript">
     $(function () {
-        
+
         blocksHolder.twoMinDwall(utils, baseSettings);
         blocksHolder.twoMinDsystem(utils, baseSettings);
         blocksHolder.twoMinDblockEditing(utils, baseSettings);
         blocksHolder.twoMinDpost(utils, baseSettings);
-        
+
         $('.blocks-holder-mover').twoMinDinfiniteMover({
             target: blocksHolder
         });
 
         //actions
         $('header .icon-list .spawn').twoMinDaction({
-            action: 'spawn'
+            action: 'spawn',
+            spawnToCenter: true,
+            spawnMove: {
+                left: -1050,
+                top: -1050
+            }
         });
         $('footer .icon.add').twoMinDaction({
             action: 'add'

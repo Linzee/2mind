@@ -6,7 +6,7 @@ use Nette,
     Nette\Application\Responses\JsonResponse;
 
 /**
- * Base presenter for all application presenters.
+ * @author Ienze
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter {
 
@@ -28,12 +28,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter {
         $this->template->setTranslator(new \App\TwoMinD\GetTextTranslator());
 
         $this->template->currentUser = $this->currentUser;
-        
+
         $this->template->online = $this->usersManager->getCurrentOnlineCount();
     }
 
     public function simpleResponse($response) {
-        if ($response instanceof \App\Model\WallError) {
+        if ($response instanceof \App\TwoMinD\WallError) {
             $this->sendResponse(new JsonResponse(array('response' => $response->errorType, 'message' => $response->errorMessage)));
         } else if ($response instanceof \Nette\Application\IResponse) {
             $this->sendResponse($response);

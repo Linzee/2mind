@@ -4,6 +4,9 @@ namespace App\TwoMinD;
 
 use Nette\Security\Passwords;
 
+/**
+ * @author Ienze
+ */
 class UsersManager implements \Nette\Security\IAuthenticator {
 
     /** @var Nette\Database\Context */
@@ -31,6 +34,34 @@ class UsersManager implements \Nette\Security\IAuthenticator {
         $user = $this->database->table('wall_users')->get($id);
 
         return new \App\TwoMinD\Response\User($user);
+    }
+
+    public function ban($id, $ip = NULL, $reason = NULL) {
+
+        if ($ip == NULL) {
+            $user = $this->database->table('wall_users')->get($id);
+            if ($user) {
+                $ip = $user->ip;
+            }
+        }
+
+        $this->database->table('wall_ban')->insert(array(
+            'id' => $id,
+            'ip' => $ip,
+            'reason' => $reason
+        ));
+    }
+
+    public function unban($id) {
+
+        $banEntry = $this->database->table('wall_ban')->where('ip = ? OR id = ?', array($id, $id));
+
+        $banEntry->delete();
+    }
+
+    public function isBanned($id) {
+        $banEntry = $this->database->table('wall_ban')->where('ip = ? OR id = ?', array($id, $id))->fetch();
+        return $banEntry ? true : false;
     }
 
     /**
@@ -86,7 +117,7 @@ class UsersManager implements \Nette\Security\IAuthenticator {
                     ->setBody("Hello, Your order has been accepted.");
         }
 
-        return $user;
+        return true; //TODO is insert succesfull?
     }
 
 }

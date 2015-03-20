@@ -3,7 +3,7 @@
 namespace App\Presenters;
 
 /**
- * Latest presenter = everything in this something.
+ * @author Ienze
  */
 class LatestPresenter extends BasePresenter {
 
@@ -13,7 +13,7 @@ class LatestPresenter extends BasePresenter {
     public function renderDefault() {
         
     }
-    
+
     public function renderBlocks() {
         
     }

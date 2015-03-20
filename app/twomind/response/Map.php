@@ -4,6 +4,9 @@ namespace App\TwoMinD\Response;
 
 use Nette\Application\IResponse;
 
+/**
+ * @author Ienze
+ */
 class Map implements IResponse {
 
     private static $fieldsToCopy;

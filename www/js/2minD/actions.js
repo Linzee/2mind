@@ -53,30 +53,35 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
             });
         },
         spawn: function (object, settings) {
-            object.click(function () {
+            
+            var doSpawn = function () {
+
+                var x = 0, y = 0;
+
                 if (settings.spawnToCenter) {
-                    blocksHolder.css({
-                        left: $(window).width() / 2,
-                        top: $(window).height() / 2
-                    });
-                } else {
-                    blocksHolder.css({
-                        left: 0,
-                        top: 0
-                    });
+                    x = $(window).width() / 2;
+                    y = $(window).height() / 2;
                 }
+
+                console.log(settings.spawnMove);
+
+                if (settings.spawnMove) {
+                    x += settings.spawnMove.left;
+                    y += settings.spawnMove.top;
+                }
+                
+                blocksHolder.css({
+                    left: x,
+                    top: y
+                });
 
                 blocksHolder.trigger("holderMoved");
 
                 return false;
-            });
-            if (settings.spawnToCenter) {
-                blocksHolder.css({
-                    left: $(window).width() / 2,
-                    top: $(window).height() / 2
-                });
-                blocksHolder.trigger("forceUpdateFixedPos");
-            }
+            };
+            
+            object.click(doSpawn);
+            doSpawn();
         },
         settings: function (object) {
             object.click(function () {

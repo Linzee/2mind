@@ -1,60 +1,36 @@
 <div id="block_0_0" class="block">
-    <div class="block-zero">
-        <div class="small-4 columns">
-            <h1 class="logo"><sup>2</sup><span class="anim">min</span><sub>D</sub></h1>
-            <hr/>
-            <p>{include ../pageDescription.latte}</p>
-            {include ../endora.latte}
-            <ul class="small-block-grid-4">
-                <li>
-                    <div class="social online">
-                        <div class="count"><span class="online-counter">{$online}<span></div>
-                                    <div class="name">{_}Online{/_}</div>
-                                    </div>
-                                    </li>
-                                    <li>
-                                        <a href="http://www.facebook.com/sharer.php?u=http://2mind.ienze.me" target="_blank" class="social facebook">
-                                            <div class="count"><span class="social-icon"></span></div>
-                                            <div class="name">Facebook</div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="http://twitter.com/share?url=http://2mind.ienze.me" target="_blank" class="social twitter">
-                                            <div class="count"><span class="social-icon"></span></div>
-                                            <div class="name">Twitter</div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://plus.google.com/share?url=http://2mind.ienze.me" target="_blank" class="social google">
-                                            <div class="count"><span class="social-icon"></span></div>
-                                            <div class="name">Google+</div>
-                                        </a>
-                                    </li>
-                                    </ul>
-                                    </div>
-                                    <div class="small-4 columns">
-                                        <!--
-                                        <dl>
-                                            <dt><span class="icon move"></span>{_}Posúvanie{/_}</dt>
-                                            <dd>{_}Môžeš sa pohybovať jednoduchým ťahaním plochy kurzorom myši alebo použiť šípky na klávesnici.{/_}</dd>
-                                            <dt><span class="icon add"></span>{_}Písanie{/_}</dt>
-                                            <dd>{_}Môžeš napísať novú správu kliknutim na symbol plus. Napiš čokoľvek čo chceš, aby sme vedeli kto si.{/_}</dd>
-                                            <dt><span class="icon search-icon"></span>{_}Vyhľadávanie{/_}</dt>
-                                            <dd>{_}Môžeš hľadať v názvoch a popisoch tém. Dokonca možeš upráviť tieto údaje pre jednotlivé štvorce.{/_}</dd>
-                                            <dt><span class="icon delete"></span>{_}Mazanie{/_}</dt>
-                                            <dd>{_}Môžeš zmazať správay ktoré sa ti až tak nepáčia. Ale bolo by dobré ak by sme dodržiavali isté pravidlá.{/_}</dd>
-                                            <dt><span class="icon fullscreen"></span>{_}Fullscreen{/_}</dt>
-                                            <dd>{_}Môžeš zapnúť stránku na celú obrazovku aby si schoval nepodstatné veci.{/_}</dd>
-                                        </dl>
-                                        -->
-                                    </div>
-                                    <div class="small-4 columns">
-                                        <h3>{_}Najnovšie správy{/_}:</h3>
-                                        <div class="scrollable">
-                                            <ul class="latest-posts posts-list">
+    <div class="block-zero">    
+        <h1 class="logo"><sup>2</sup><span class="anim">min</span><sub>D</sub></h1>
+        <hr/>
+        <p>{include ../pageDescription.latte}</p>
+        {include ../endora.latte}
 
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    </div>
+        {include ../social.latte}
+
+        <ul class="inline-list">
+            {if $user->isLoggedIn()}
+                <li>{$user->id}</li>
+                <li><a n:href="User:logout">Odhlasit</a></li>
+                {/if}
+            <li><a n:href="Map:">Mapa</a></li>
+            <li><a n:href="Latest:">Najnovsie spravy</a></li>
+            <li><a class="start-guide" href="#">Spusti tutorial</a></li>
+        </ul>
+    </div>
+    {*
+    <div class="small-4 columns">
+        <dl>
+            <dt><span class="icon move"></span>{_}Posúvanie{/_}</dt>
+            <dd>{_}Môžeš sa pohybovať jednoduchým ťahaním plochy kurzorom myši alebo použiť šípky na klávesnici.{/_}</dd>
+            <dt><span class="icon add"></span>{_}Písanie{/_}</dt>
+            <dd>{_}Môžeš napísať novú správu kliknutim na symbol plus. Napiš čokoľvek čo chceš, aby sme vedeli kto si.{/_}</dd>
+            <dt><span class="icon search-icon"></span>{_}Vyhľadávanie{/_}</dt>
+            <dd>{_}Môžeš hľadať v názvoch a popisoch tém. Dokonca možeš upráviť tieto údaje pre jednotlivé štvorce.{/_}</dd>
+            <dt><span class="icon delete"></span>{_}Mazanie{/_}</dt>
+            <dd>{_}Môžeš zmazať správay ktoré sa ti až tak nepáčia. Ale bolo by dobré ak by sme dodržiavali isté pravidlá.{/_}</dd>
+            <dt><span class="icon fullscreen"></span>{_}Fullscreen{/_}</dt>
+            <dd>{_}Môžeš zapnúť stránku na celú obrazovku aby si schoval nepodstatné veci.{/_}</dd>
+        </dl>
+    </div>
+    *}
+</div>

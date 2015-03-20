@@ -36,8 +36,42 @@ textarea.semiedtable, input.semiedtable {
 	}
 }
 
+.posts-list {
+	margin: 0;
+	li {
+		border-bottom: 1px solid scale-color($primary-color, $lightness: 58%);
+		list-style: none;
+		
+		a {
+			padding: 10px;
+			color: #333;
+			display: block;
+			
+			&:hover {
+				color: $primary-color;
+				background: scale-color($primary-color, $lightness: 90%);
+			}
+		}
+		
+		.title {
+			margin: 0;
+			line-height: 1;
+		}
+		
+		.description {
+			color: #404040;
+			font-size: rem-calc(14);
+		}
+		
+		.coord {
+			opacity: 0.6;
+			font-size: rem-calc(12);
+		}
+	}
+}
+
 /*
-	TITLE
+   PAGES
 */
 
 .title-bg {
@@ -53,21 +87,22 @@ textarea.semiedtable, input.semiedtable {
 		margin-top: 0;
 		color: white;
 		
+		font-size: rem-calc(70);
+	
+		sup, sub {
+			font-size: rem-calc(50);
+		}
+		
 		a {
 			color: white;
 		}
 	}
 	
-	.button {
-		margin: rem-calc(10 0 20 0);
-	}
-	
 	p {
 		display: block;
-		margin: 0 rem-calc(16);
+		margin: rem-calc(16 0);
+		color: #eaeaea;
 		
-		text-indent: rem-calc(64);
-		letter-spacing: rem-calc(2.6);
 		text-align: justify;
 		color: scale-color($primary-color, $lightness: 85%);
 	}
@@ -81,48 +116,58 @@ textarea.semiedtable, input.semiedtable {
 			font-size: rem-calc(12);
 		}
 	}
-}
-
-h1.logo {
-	margin: 0;
-	font-size: rem-calc(70);
 	
-	sup, sub {
-		font-size: rem-calc(50);
+	.button {
+		background-image: url(../images/texturebg.png);
+		border-radius: $global-radius;
+		box-shadow: 1px 3px 0 gray;
+		color: $primary-color;
+	}
+	
+	
+	.no-bullet {
+		li {
+			text-align: left;
+			color: scale-color($primary-color, $lightness: 85%);
+		}
+	}
+	
+	.login-panel {
+		text-align: left;
+		
+		#frm-signInForm-remember {
+			margin-right: rem-calc(8);
+			margin-top: -8px;
+		}
+		
+		#frm-signInForm-send {
+			margin-bottom: rem-calc(32);
+		}
+		
+		label {
+			color: #eaeaea;
+		}
 	}
 }
 
 @media #{$medium-up} {
-	h1.logo {
-		font-size: rem-calc(120);
-		sup, sub {
-			font-size: rem-calc(90);
-		}
-	}
-	
 	.title-bg {
 		h1.logo, h2.logo {
-			padding-top: 0.6em;
-			padding-bottom: 0;
+			padding-top: 0.4em;
+			padding-bottom: 0.2em;
 		}
 		
-		p {
-			max-width: 50%;
-			margin: 0 auto;
-		}
-		
-		.button {
-			margin: rem-calc(32 0 50 0);
-		}
-		
-		.inline-list li {
-			font-size: rem-calc(16);
+		h1.logo {
+			font-size: rem-calc(120);
+			sup, sub {
+				font-size: rem-calc(90);
+			}
 		}
 	}
 }
 
 /*
-	WALL
+   WALL
 */
 
 .wall-container {
@@ -139,45 +184,64 @@ h1.logo {
 	}
 	
 	header {
-		top: 0; 
+		top: 0;
+		height: $wall-header-bar-height;
+		line-height: $wall-header-bar-height;
+		
+		padding: 0 rem-calc(16);
 		text-align: center;
+		
+		input {
+			text-align: center;
+			vertical-align: middle;
+		
+			&.title {
+				font-size: rem-calc(24);
+			}
+		
+			&.description {
+				margin-top: -8px;
+				font-size: rem-calc(14);
+				display: none;
+			}
+		}
+		
+		&:hover {
+			input.description {
+				display: inline-block;
+			}
+		}
 		
 		&.with-bg {
 			background-color: rgba(255, 255, 255, 0.8);
 			padding-bottom: rem-calc(10);
-			border-bottom: 1px solid #999999;
-		}
-		
-		ul {
-			position: absolute;
-			right: 0;
-			top: 0;
+			border-bottom: 1px solid #a9a9a9;
 		}
 		
 		.coords {
-			position: absolute;
-			left: 16px;
-			top: 16px;
+			vertical-align: middle;
+			float: left;
 			
 			input {
 				width: 64px;
 			}
 		}
 		
-		input {
-			text-align: center;
-		
-			&.title {
-				margin-top: rem-calc(8);
-				font-size: rem-calc(24);
-			}
-		
-			&.description {
-				font-size: rem-calc(14);
+		.icon-list {
+			height: 36px;
+			float: right;
+			display: inline-block;
+			
+			margin: 0;
+			margin-top: floor(($wall-header-bar-height - 36px) / 2);
+			
+			li {
+				display: inline-block;
+				vertical-align: top;
 			}
 		}
 	}
-		
+	
 	footer {
 		bottom: 0;
 		text-align: center;
@@ -226,6 +290,8 @@ h1.logo {
 	position: relative;
 	min-height: 100%;
 	
+	background: #F5E4FA; //lebo je dobra :D
+	
 	.blocks-holder-mover {
 		position: absolute;
 		top: 0;
@@ -238,28 +304,6 @@ h1.logo {
 		width: 0;
 		height: 0;
 		overflow: visible;
-		
-		&.cross {
-			position: relative;
-			
-			&:before, &:after {
-				width: 1px; height: 1px;
-				background: #333333;
-				content: " ";
-				position: absolute;
-				left: 0; top: 0;
-			}
-			
-			&:before {
-				height: $block-size * 20;
-				top: $block-size * -10;
-			}
-			
-			&:after {
-				width: $block-size * 20;
-				left: $block-size * -10;
-			}
-		}
 	}
 	
 	.block {
@@ -269,28 +313,21 @@ h1.logo {
 		background: url(../images/grid.png);
 		border: 1px solid $primary-color;
 		
-		/* unnecessary fix
-		.posts {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: $block-size - 2;
-			height: $block-size - 2;
-			pointer-events: none;
+		.title, .description {
+			display: none; //I dont like them right now.
 		}
-		*/
 	}
 	
 	.post {
 		position: absolute;
 		margin: 0;
-		padding: rem-calc(12);
-		padding-right: rem-calc(35);
+		padding: rem-calc(8);
+		padding-right: rem-calc(30);
 		border-radius: $global-radius;
 		background: white;
-		border: 1px solid #b1b1b1;
 		display: block;
 		
+		min-width: rem-calc(100); //because we dont want time to go out of post
 		max-width: rem-calc(321);
 		white-space: pre-line;
 		
@@ -306,8 +343,20 @@ h1.logo {
 			background-position: -360px 0;
 		}
 		
+		time {
+			display: none;
+			font-size: rem-calc(10);
+			opacity: 0.6;
+			position: absolute;
+			left: 8px;
+			top: 0;
+		}
+		
 		&:hover, &.selected {
 			.reply {
+				display: inline-block;
+			}
+			time {
 				display: inline-block;
 			}
 		}
@@ -315,60 +364,150 @@ h1.logo {
 	
 	.post-group {
 		position: absolute;
+		
 		.post {
 			position: relative;
 			display: block;
-			
-			/*
-			display: inline-block;
-			
-			&:before {
-				position: relative;
-				display: block;
-				content: " ";
-				height: 0;
-			}
-			*/
 		}
 	}
 	
 	.map-block {
 		position: absolute;
-		width: 11px;
-		height: 11px;
-		background: #cccccc;
-		border: 1px solid #333333;
 		
 		.block-info {
-			//yea, same like post
-			position: absolute;
-			margin: 0;
-			padding: rem-calc(12);
-			border-radius: $global-radius;
-			background: white;
-			border: 1px solid #b1b1b1;
-			
-			opacity: 0.8;
-			display: none;
-			z-index: 2;
-		 	width: rem-calc(321);
-		}
-	}
-	
-	.block {
-		.title, .description {
-			display: none; //I dont like them right now.
+		
 		}
 	}
 }
 
-.icon-list {
-	margin-right: rem-calc(16);
-	
-	li {
-		display: inline-block;
+#block_0_0 {
+	.block-zero {
+		position: absolute;
+		top: $block-size / 2 - $block-zero-size / 2 - 1;
+		left: $block-size / 2 - $block-zero-size / 2 - 1;
+		width: $block-zero-size;
+		//height: $block-zero-size;
+		
+		background: scale-color($primary-color, $lightness: 99%);
+		border: 1px solid $primary-color;
+		padding: rem-calc(16);
+		
+		.logo {
+			color: scale-color($primary-color, $lightness: 32%);
+			text-align: center;
+		}
+		
+		.inline-list {
+			margin-bottom: 0;
+		}	
 	}
 }
+
+#block_439_912.block {
+	background: url(../images/grid.png), url(../images/heisenberg.png) no-repeat center;
+	background-size: auto, contain;
+	@include pixelated-bg();
+}
+
+/*
+   REVEALS
+*/
+
+#addReveal {
+	.columns:last-child {
+		padding-left: 8px;
+	}
+	
+	input, textarea {
+		min-height: 60px;
+		margin-bottom: 0;
+		
+		&:focus {
+			box-shadow: none;
+		}
+	}
+	
+	.row {
+		max-width: none;
+	}
+}
+
+#settingsReveal {
+	.colors li {
+		a.color {
+			display: block;
+			min-height: 40px;
+			line-height: 40px;
+			vertical-align: middle;
+			text-align: center;
+			color: gray;
+			color: rgba(255, 255, 255, 0.1);
+			
+			&.selected {
+				box-shadow: 0 0 5px black;
+			}
+		}
+	}
+}
+
+#searchReveal {
+	
+}
+
+#messageReveal {
+	padding: rem-calc(20);
+	background: #ff4500;
+	color: white;
+	
+	h2 {
+		color: white;
+	}
+}
+
+/*
+	SEARCH
+*/
+
+.search {
+	position: relative;
+	
+	.search-icon {
+		padding-left: 16px;
+		margin-left: -16px;
+		vertical-align: top;
+	}
+	
+	.searchForm {
+		display: block;
+		position: absolute;
+		width: 260px;
+		top: 0;
+		left: -285px;
+		
+		overflow: hidden;
+		pointer-events: none;
+	}
+	
+	/* animations: */
+	
+	.searchForm input {
+		transform: translateX(260px);
+		transition: transform 0.4s ease-in-out;
+		margin: 0;
+	}
+	
+	&:hover .searchForm {
+		pointer-events: all;
+	}
+	
+	&:hover .searchForm input {
+		transform: translateX(0px);
+	}
+}
+
+/*
+	ICONS
+*/
 
 .icon {
 	background-image: url(../images/icons.png);
@@ -394,202 +533,45 @@ h1.logo {
 	margin: -10px 2px -12px 0;
 }
 
-.search {
-	position: relative;
-	
-	a {
-		padding-left: 16px;
-		margin-left: -16px;
-	}
-	
-	.searchForm {
-		display: block;
-		position: absolute;
-		width: 260px;
-		top: 16px;
-		left: -285px;
-		
-		overflow: hidden;
-		pointer-events: none;
-	}
-	
-	//animations:
-	
-	.searchForm input {
-		transform: translateX(260px);
-		transition: transform 0.4s ease-in-out;
-	}
-	
-	&:hover .searchForm {
-		pointer-events: all;
-	}
-	
-	&:hover .searchForm input {
-		transform: translateX(0px);
-	}
-}
+/*
+   UTILS
+*/
 
-#addForm {
-	.columns:last-child {
-		padding-left: 8px;
-	}
-	
-	input, textarea {
-		min-height: 60px;
-		margin-bottom: 0;
+.social {
+	background: white;
+	text-align: center;
+	display: block;
 		
-		&:focus {
-			box-shadow: none;
-		}
-	}
-}
-
-#block_0_0 {
-	
-	.block-zero {
-		@include grid-row;
-	
-		background: scale-color($primary-color, $lightness: 99%);
-		border: 1px solid $primary-color;
-		border-radius: $global-radius;
-		
-		max-width: rem-calc(1500);
-		max-width: rem-calc(1500);
-		margin: rem-calc(80);
-		padding: rem-calc(16);
-	}
-	
-	.logo {
-		color: scale-color($primary-color, $lightness: 32%);
-	}
-	
-	.search-block-zero {
-		padding: rem-calc(16 0);
-		
-		input[type="text"] {
-			max-width: 280px;
-			display: inline-block;
-			margin: 0;
-		}
-		
-		a {
-			display: inline-block;
-			vertical-align: top;
-			margin-left: rem-calc(8);
-		}
-	}
-	
-	.social {
-		min-height: 120px;
-		background: white;
-		text-align: center;
-		display: block;
-		
-		color: white;
-			
-		.count {
-			font-size: rem-calc(48);
-			min-height: 80px;
-		}
-			
-		.name {
-			font-size: rem-calc(14);
-			
-			a {
-				color: white;
-			}
-		}
-			
-		//colors!
-		&.online {
-			background-color: #9acd32;
-		}
-		
-		&.facebook {
-			background-color: #3a5795;
-		}
-		
-		&.twitter {
-			background-color: #55acee;
-		}
-		
-		&.google {
-			background-color: #d73d32;
-		}
-	}
-	
-	dt {
-		.icon {
-			vertical-align: middle;
-			margin-right: rem-calc(8);
-		}
-	}
-}
-
-#block_439_912.block {
-	background: url(../images/grid.png), url(../images/heisenberg.png) no-repeat center;
-	background-size: auto, contain;
-	@include pixelated-bg();
-}
-
-.settings-form {
-	.colors li {
-		a.color {
-			display: block;
-			min-height: 40px;
-			line-height: 40px;
-			vertical-align: middle;
-			text-align: center;
-			color: gray;
-			color: rgba(255, 255, 255, 0.1);
-			
-			&.selected {
-				box-shadow: 0 0 5px black;
-			}
-		}
-	}
-}
-
-#messageReveal {
-	padding: rem-calc(20);
-	background: #ff4500;
 	color: white;
-	h2 {
-		color: white;
-	}
-}
-
-.posts-list {
-	margin: 0;
-	li {
-		border-bottom: 1px solid scale-color($primary-color, $lightness: 58%);
-		list-style: none;
-		
-		a {
-			padding: 10px;
-			color: #333;
-			display: block;
 			
-			&:hover {
-				color: $primary-color;
-				background: scale-color($primary-color, $lightness: 90%);
-			}
+	.count {
+		font-size: rem-calc(40);
+		min-height: 66px;
+	}
+			
+	.name {
+		font-size: rem-calc(14);
+			
+		a {
+			color: white;
 		}
+	}
+			
+	//colors!
+	&.online {
+		background-color: #9acd32;
+	}
 		
-		.title {
-			margin: 0;
-			line-height: 1;
-		}
+	&.facebook {
+		background-color: #3a5795;
+	}
 		
-		.description {
-			color: #404040;
-			font-size: rem-calc(14);
-		}
+	&.twitter {
+		background-color: #55acee;
+	}
 		
-		.coord {
-			opacity: 0.6;
-			font-size: rem-calc(12);
-		}
+	&.google {
+		background-color: #d73d32;
 	}
 }
 
@@ -600,8 +582,8 @@ h3.page-title {
 
 .endora-ad {
 	opacity: 0.4;
-	margin-bottom: rem-calc(16);
-	display: none;
+	padding-bottom: rem-calc(16);
+	//display: none;
 }
 
 .soon {

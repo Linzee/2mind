@@ -68,13 +68,17 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
                         }
 
                         var userEl = $('#userReveal');
-                        
+
                         $.each(data.user, function (index, value) {
 
-                            if(Object.prototype.toString.call(value) === '[object Date]') {
-                                value = value.
+                            if (value === null) {
+                                value = '-';
                             }
-                            
+
+                            if (value.date) {
+                                value = utils.prettyDate(value);
+                            }
+
                             userEl.find('.' + index).text(value);
                         });
 
@@ -87,7 +91,7 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
         post: function (object, settings) {
             object.click(function () {
 
-                var url = settings.ajax_url + "/wall/post?id=".settings.post;
+                var url = settings.ajax_url + "/wall/post?id=" + settings.post;
 
                 $.ajax({
                     url: url,
@@ -101,6 +105,15 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
                         var postEl = $('#postReveal');
 
                         $.each(data.post, function (index, value) {
+
+                            if (value === null) {
+                                value = '-';
+                            }
+
+                            if (value.date) {
+                                value = utils.prettyDate(value);
+                            }
+
                             postEl.find('.' + index).text(value);
                         });
 
@@ -109,7 +122,107 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
 
                 return false;
             });
-        }
+        },
+        userBan: function (object, settings) {
+            object.click(function () {
+
+                var userId = object.closest(".reveal-modal").find(".id").text();
+
+                var url = settings.ajax_url + "/users/ban?id=" + userId + "&reason=" + encodeURIComponent('moderator');
+
+                $.ajax({
+                    url: url,
+                    dataType: 'json'
+                }).done(function (data) {
+                    if (data.response !== 'success') {
+                        utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
+                    }
+                });
+                
+                $('#userReveal').foundation('reveal', 'close');
+                
+            });
+        },
+        userUnban: function (object, settings) {
+            object.click(function () {
+
+                var userId = object.closest(".reveal-modal").find(".id").text();
+                
+                var url = settings.ajax_url + "/users/unban?id=" + userId;
+                
+                $.ajax({
+                    url: url,
+                    dataType: 'json'
+                }).done(function (data) {
+                    if (data.response !== 'success') {
+                        utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
+                    }
+                });
+                
+                $('#userReveal').foundation('reveal', 'close');
+
+            });
+        },
+        userRemoveAllPosts: function (object, settings) {
+            object.click(function () {
+
+                var userId = object.closest(".reveal-modal").find(".id").text();
+
+                var url = settings.ajax_url + "/users/removeAllPosts?id=" + userId;
+
+                $.ajax({
+                    url: url,
+                    dataType: 'json'
+                }).done(function (data) {
+                    if (data.response !== 'success') {
+                        utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
+                    }
+                });
+                
+                $('#userReveal').foundation('reveal', 'close');
+                
+            });
+        },
+        postRemove: function (object, settings) {
+            object.click(function () {
+
+                var postId = object.closest(".reveal-modal").find(".id").text();
+
+                var url = settings.ajax_url + "/wall/remove?id=" + postId;
+
+                $.ajax({
+                    url: url,
+                    dataType: 'json'
+                }).done(function (data) {
+                    if (data.response !== 'success') {
+                        utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
+                    }
+                });
+
+                $('#postReveal').foundation('reveal', 'close');
+
+            });
+        },
+        postRenew: function (object, settings) {
+            object.click(function () {
+
+                var postId = object.closest(".reveal-modal").find(".id").text();
+
+                var url = settings.ajax_url + "/wall/renew?id=" + postId;
+
+                $.ajax({
+                    url: url,
+                    dataType: 'json'
+                }).done(function (data) {
+                    if (data.response !== 'success') {
+                        utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
+                    }
+                });
+
+                $('#postReveal').foundation('reveal', 'close');
+
+            });
+        },
     };
 
     $.fn.twoMinDmoderatorAction = function (settingsIn) {
@@ -132,5 +245,16 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
             });
         }
     };
+
+    blocksHolder.on("postCreated", function (event, post) {
+        var postEl = $(post);
+
+        var postId = parseInt(post.attr("id").substring(5));
+
+        postEl.twoMinDmoderatorAction({
+            action: 'post',
+            post: postId
+        });
+    });
 };
 

@@ -7,7 +7,7 @@ use Nette\Utils\Validators,
     Nette\Application\Responses\JsonResponse;
 
 /**
- * Wall presenter = everything in this something.
+ * @author Ienze
  */
 class WallPresenter extends BasePresenter {
 
@@ -116,7 +116,7 @@ class WallPresenter extends BasePresenter {
             if ($this->isAjax() || $this->allowWithoutAjax) {
 
                 if (!$this->currentUser->isModerator()) {
-                    $this->simpleResponse(\App\Model\WallError::NO_MODERATOR);
+                    $this->simpleResponse(\App\TwoMinD\WallError::$NO_MODERATOR);
                     return;
                 }
 
@@ -136,7 +136,7 @@ class WallPresenter extends BasePresenter {
         if ($this->isAjax() || $this->allowWithoutAjax) {
 
             if (!$this->currentUser->isModerator()) {
-                $this->simpleResponse(\App\Model\WallError::NO_MODERATOR);
+                $this->simpleResponse(\App\TwoMinD\WallError::$NO_MODERATOR);
                 return;
             }
 
@@ -154,7 +154,7 @@ class WallPresenter extends BasePresenter {
 
             $searchResult = $this->wall->search($search);
 
-            if ($searchResult instanceof \App\Model\WallError) {
+            if ($searchResult instanceof \App\TwoMinD\WallError) {
                 $this->simpleResponse($searchResult);
             } else {
                 $this->sendResponse($searchResult);
@@ -205,4 +205,5 @@ class WallPresenter extends BasePresenter {
             '60' => $this->usersManager->getCurrentOnlineCount(60)
         )));
     }
+
 }

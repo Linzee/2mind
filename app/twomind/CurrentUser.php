@@ -2,21 +2,32 @@
 
 namespace App\TwoMinD;
 
+/**
+ * @author Ienze
+ */
 class CurrentUser {
+
+    /** @var App\TwoMinD\Pallete */
+    private $pallete;
 
     /** @var \Nette\Database\Context */
     private $database;
 
     /** @var \Nette\Security\User */
     private $user;
+
+    /** @var \Nette\Http\IRequest */
+    private $request;
     private $id;
     private $data;
     private $falseData;
 
-    public function __construct(\Nette\Database\Context $database, \Nette\Http\Session $session, \Nette\Security\User $user) {
+    public function __construct(\App\TwoMinD\Pallete $pallete, \Nette\Database\Context $database, \Nette\Http\Session $session, \Nette\Security\User $user, \Nette\Http\IRequest $request) {
 
+        $this->pallete = $pallete;
         $this->database = $database;
         $this->user = $user;
+        $this->request = $request;
 
         if ($user->isLoggedIn()) {
             $this->id = $user->id;
@@ -31,14 +42,20 @@ class CurrentUser {
                         'color' => $this->selectRandomColor()
             );
             $this->falseData = true;
+        } else {
+            $this->data->update(array(
+                'ip' => $this->request->getRemoteAddress()
+            ));
         }
     }
 
     private function createUser() {
         if (!$this->data || $this->falseData) {
+
             $this->database->table('wall_users')->insert(array(
                 'id' => $this->id,
-                'created' => new \Nette\Database\SqlLiteral('NOW()')
+                'created' => new \Nette\Database\SqlLiteral('NOW()'),
+                'ip' => $this->request->getRemoteAddress()
             ));
 
             $this->data = $this->database->table('wall_users')->get($this->id);
@@ -78,8 +95,12 @@ class CurrentUser {
         ));
     }
 
+    public function getPallete() {
+        return $this->pallete;
+    }
+
     public function selectRandomColor() {
-        return 'FFFFFF';
+        return $this->pallete->randomColor();
     }
 
     public function isModerator() {

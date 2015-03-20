@@ -1,10 +1,24 @@
 {block title}Kontakt{/block}
 
 {block content}
-<section class="fullpage title-bg">
-    <h2 class="logo"><a n:href="Title:"><sup>2</sup><span class="anim">min</span><sub>D</sub></a></h2>
-    <p>Ak máte otázky, pripomienky alebo nápady na vylepšenie možete ma kontaktovať na mailovej adrese d.gmiterko@gmail.com</p>
-    {include ../titleFooter.latte}
-    {include ../endora.latte}
+<section class="fullpage-min title-bg">
+    <div class="row">
+        <h2 class="logo"><a n:href="Title:"><sup>2</sup><span class="anim">min</span><sub>D</sub></a></h2>
+
+        <p>Ak máte otázky, pripomienky alebo nápady na vylepšenie možete ma kontaktovať:</p>
+
+        <ul class="no-bullet">
+            <li>Email: <a href="mailto:d.gmiterko@gmail.com">d.gmiterko@gmail.com</a></li>
+            <li>Twitter: <a href="https://twitter.com/ienze">@ienze</a></li>
+            <!--<li>Web: <a href="http://ienze.me">ienze.me</a> mozno niekedy konecne urobim</li>-->
+        </ul>
+
+        <div class="small-12 medium-5 small-centered column">
+            {include ../social.latte}
+        </div>
+
+        {include ../titleFooter.latte}
+        {include ../endora.latte}
+    </div>
 </section>
 {/block}

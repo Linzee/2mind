@@ -2,6 +2,9 @@
 
 namespace App\TwoMinD;
 
+/**
+ * @author Ienze
+ */
 class WallError {
 
     public static $HACK;

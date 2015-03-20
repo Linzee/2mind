@@ -91,13 +91,22 @@ function twoMinDutils(settingsIn) {
         return parseInt(colorPart, 16) < 80;
     };
 
-    this.prettyDate = function (date) {
-        var secs = Math.floor((new Date().getTime() - date.getTime()) / 1000);
-        if (secs < 3600)
-            return Math.floor(secs / 60) + " min(s) ago";
-        if (secs < 86400)
-            return Math.floor(secs / 3600) + " hour(s) ago";
-        return date.toDateString();
+    this.prettyDate = function (value) {
+        
+        var t = value.date.split(/[- :]/);
+        var date = new Date(t[0], t[1] - 1, t[2], t[3], t[4], t[5]);
+
+        var diff = (((new Date()).getTime() - date.getTime()) / 1000);
+
+        if(diff < 86400) {
+            return  diff < 60 && "Pred menej ako minutou" ||
+                    diff < 120 && "Pred jednou minutou" ||
+                    diff < 3600 && "Pred " + Math.floor(diff / 60) + " minutami" ||
+                    diff < 7200 && "Pred jednou hodinou" ||
+                    diff < 86400 && "Pred " + Math.floor(diff / 3600) + " hodinami";
+        }
+        
+        return date.toLocaleString();
     }
 
     return this;
@@ -123,6 +132,9 @@ $(function () {
         var dynamicElement = $(this);
         var input = dynamicElement.prev();
         dynamicElement.hide();
+        
+        dynamicElement.text(input.attr("placeholder"));
+        var minSize = dynamicElement.width();
 
         input.on("keypress changeLength", function (e) {
             if (e.which !== 0 && e.charCode !== 0) {
@@ -130,8 +142,8 @@ $(function () {
                 dynamicElement.text($(this).val() + c);
 
                 var inputSize = dynamicElement.width();
-                if (inputSize < 64) {
-                    inputSize = 64;
+                if (inputSize < minSize) {
+                    inputSize = minSize;
                 }
                 $(this).css("width", inputSize);
             }

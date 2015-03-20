@@ -6,11 +6,11 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
         ajax_url: 'http://' + document.domain,
         speed: 400,
         template_block: '<div class="block"></div>',
-        template_post: '<p class="post"><span></span><a href="#" class="reply">Reply</a></p>',
+        template_post: '<p class="post"><span></span><time></time><a href="#" class="reply">Reply</a></p>',
         range: 1,
         moderator: false
     }, settingsIn);
-
+    
     var updating = false;
 
     var updateBlock = function (block) {
@@ -112,7 +112,7 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
             var newEl = false;
 
             var postEl = postsElement.find("#" + postId);
-            if (!postEl.size() && !post.deleted) {
+            if (!postEl.size() && (!post.deleted || settings.moderator)) {
                 postEl = $(settings.template_post);
                 postEl.attr('id', postId);
                 postsElement.append(postEl);
@@ -147,7 +147,9 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
                     postEl.remove();
                 }
             } else {
+                
                 postEl.find('span').text(post.content);
+                postEl.find('time').text(utils.prettyDate(post.created));
 
                 if (!post.parent) {
                     if (postEl.parent().hasClass('post-group')) {

@@ -4,6 +4,9 @@ namespace App\TwoMinD\Response;
 
 use Nette\Application\IResponse;
 
+/**
+ * @author Ienze
+ */
 class Block implements IResponse {
 
     private static $fieldsToCopy;
@@ -26,7 +29,7 @@ class Block implements IResponse {
         $this->posts = $posts;
         $this->block = $block;
 
-        self::$fieldsToCopy = array('id', 'local_x', 'local_y', 'deleted', 'content', 'color', 'parent');
+        self::$fieldsToCopy = array('id', 'local_x', 'local_y', 'deleted', 'content', 'color', 'parent', 'created');
     }
 
     public function getPosts() {
