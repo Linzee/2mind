@@ -2,7 +2,7 @@ $.fn.twoMinDsystem = function (utils, settingsIn) {
 
     var settings = $.extend({}, {
         ajax_url: 'http://' + document.domain,
-        speed: 30000
+        speed: 9999
     }, settingsIn);
 
     var systemUpdate = function (block) {

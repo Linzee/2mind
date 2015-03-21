@@ -123,10 +123,11 @@
         $('header .icon-list .spawn').twoMinDaction({
             action: 'spawn',
             spawnToCenter: true,
-            spawnMove: {
-                left: -1050,
-                top: -1050
-            }
+            posSpawn: {
+                pos_x: 0.5,
+                pos_y: 0.5
+            },
+            posLoad: {$currentUser->getPosString()|noescape}
         });
         $('footer .icon.add').twoMinDaction({
             action: 'add'

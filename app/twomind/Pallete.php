@@ -7,7 +7,7 @@ namespace App\TwoMinD;
  */
 class Pallete extends \Nette\Object {
 
-    private $colors;
+    public $colors;
 
     public function __construct($colors) {
         $this->colors = $colors;
@@ -20,5 +20,4 @@ class Pallete extends \Nette\Object {
     public function randomColor() {
         return $this->colors[array_rand($this->colors)];
     }
-
 }

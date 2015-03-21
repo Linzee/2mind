@@ -360,6 +360,10 @@ textarea.semiedtable, input.semiedtable {
 				display: inline-block;
 			}
 		}
+		
+		&.deleted {
+			opacity: 0.5;
+		}
 	}
 	
 	.post-group {
@@ -373,9 +377,40 @@ textarea.semiedtable, input.semiedtable {
 	
 	.map-block {
 		position: absolute;
+		width: $map-block-size;
+		height: $map-block-size;
+		display: table;
+		overflow: hidden;
+		
+		background: rgba(0, 0, 0, 0.1);
 		
 		.block-info {
-		
+			font-size: 20px;
+			text-align: center;
+			padding: rem-calc(8);
+			
+			display: table-cell; 
+			vertical-align: middle; 
+			text-align: center; 
+			
+			.title {
+				font-size: 100%;
+				display: inline;
+				line-height: 100%;
+			}
+			
+			.description {
+				font-size: 50%;display: inline;
+				
+				display: none;
+			}
+			
+			.coords {
+				position: absolute;
+				top: -5px; left: 4px;
+				font-size: rem-calc(8);
+				color: white;
+			}
 		}
 	}
 }
@@ -527,6 +562,12 @@ textarea.semiedtable, input.semiedtable {
 		(none, search-icon, spawn, settings, fullscreen, add, wall, menu, move, delete),
 		(0 0, -36px 0, -72px 0, -108px 0, -144px 0, -180px 0, -216px 0, -252px 0, -288px 0, -324px 0)
 	);
+	
+	svg {
+		path, rectange, circle {
+			fill: $primary-color;
+		}
+	}
 }
 
 .right-off-canvas-menu .icon {

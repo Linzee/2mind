@@ -38,8 +38,8 @@ class CurrentUser {
         $this->data = $this->database->table('wall_users')->get($this->id);
         if (!$this->data) {
             $this->data = (object) array(
-                        'background' => '',
-                        'color' => $this->selectRandomColor()
+                'background' => '',
+                'color' => $this->selectRandomColor()
             );
             $this->falseData = true;
         } else {
@@ -85,6 +85,14 @@ class CurrentUser {
         }
     }
 
+    public function getPosString() {
+        if(property_exists($this->data, 'pos_x')) {
+            return '{pos_x: '.$this->pos_x.', pos_y: '.$this->pos_y.'}';
+        } else {
+            return '{pos_x: 0.5, pos_y: 0.5}';
+        }
+    }
+    
     public function updateUser($x, $y) {
 
         $this->createUser();

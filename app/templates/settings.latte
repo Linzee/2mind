@@ -4,17 +4,22 @@
     <div class="clearfix color-selector posts-color">
         <h4>{_}Zmena farby správ{/_}:</h4>
         <input class="color-field" type="text" name="color" value="#{$currentUser->color}" />
-        <ul class="colors small-block-grid-2 medium-block-grid-4"></ul>
-        <a href="#" class="randomize-colors right">{_}Zamiešať{/_}</a>
+        <ul class="colors small-block-grid-4 medium-block-grid-8">
+            {include settingsColors.latte}
+        </ul>
     </div>
 
+    {* Iba pre moderatorov *}
+    {if $currentUser->isModerator()}
     <div class="clearfix color-selector background-color">
         <h4>{_}Zmena vlastného pozadia{/_}:</h4>
         <p>Ako pozadie si možeš vybrať farbu alebo zadať adresu obrázka.</p>
         <input class="color-field" type="text" name="background" value="{$currentUser->background}" />
-        <ul class="colors small-block-grid-2 medium-block-grid-4"></ul>
-        <a href="#" class="randomize-colors right">{_}Zamiešať{/_}</a>
+        <ul class="colors small-block-grid-4 medium-block-grid-8">
+            {include settingsColors.latte}
+        </ul>
     </div>
+    {/if}
 
     <input type="submit" class="button" value="{_}Uložiť{/_}" />
 </form>

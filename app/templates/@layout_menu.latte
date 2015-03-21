@@ -51,7 +51,7 @@
                         {if $currentUser->isModerator()}
                             <li><label>Moderator</label></li>
                             <li><a class="online" href="#">Online (<span class="online-counter">{$online}</span>)</a></li>
-                            {/if}
+                        {/if}
                     </ul>
                 </aside>
                 {/block}
@@ -100,7 +100,7 @@
         <script type="text/javascript">
             var baseSettings = {
                 ajax_url: {$basePath},
-                moderator: {$currentUser->isModerator() ? 'true' : 'false'}
+                moderator: {$currentUser->isModerator() ? 'true' : 'false'|noescape}
             };
             var blocksHolder = $('.blocks-holder');
             var utils = new twoMinDutils({

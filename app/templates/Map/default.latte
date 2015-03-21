@@ -27,15 +27,16 @@
 <script src="{$basePath}/js/2minD/actions.js"></script>
 <script type="text/javascript">
     $(function () {
-        blocksHolder.twoMinDmap({
-            ajax_url: {$basePath}
-        });
         $('.blocks-holder-mover').twoMinDinfiniteMover({
             target: blocksHolder
         });
         $('header .icon-list .spawn').twoMinDaction({
             action: 'spawn',
             spawnToCenter: true
+        });
+        
+        blocksHolder.twoMinDmap({
+            ajax_url: {$basePath}
         });
     });
 

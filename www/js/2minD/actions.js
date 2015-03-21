@@ -53,8 +53,8 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
             });
         },
         spawn: function (object, settings) {
-            
-            var doSpawn = function () {
+
+            var doSpawn = function (event, load) {
 
                 var x = 0, y = 0;
 
@@ -63,11 +63,12 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
                     y = $(window).height() / 2;
                 }
 
-                console.log(settings.spawnMove);
-
-                if (settings.spawnMove) {
-                    x += settings.spawnMove.left;
-                    y += settings.spawnMove.top;
+                if(load && settings.posLoad) {
+                    x += -1 * settings.posLoad.pos_x * settings.block_size;
+                    y += -1 * settings.posLoad.pos_y * settings.block_size;
+                } else if (settings.posSpawn) {
+                    x += -1 * settings.posSpawn.pos_x * settings.block_size;
+                    y += -1 * settings.posSpawn.pos_y * settings.block_size;
                 }
                 
                 blocksHolder.css({
@@ -79,9 +80,9 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
 
                 return false;
             };
-            
+
             object.click(doSpawn);
-            doSpawn();
+            doSpawn(null, true);
         },
         settings: function (object) {
             object.click(function () {
@@ -273,16 +274,17 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
 
         var object = this;
 
-        var settings = $.extend({}, {
+        var settingsAction = $.extend({}, {
             action: false,
-            blocksHolder: $(".blocks-holder")
+            blocksHolder: $(".blocks-holder"),
+            block_size: settings.block_size
         }, settingsIn);
 
-        if (settings.action) {
+        if (settingsAction.action) {
             //find correct action and run it
             $.each(actions, function (action, actionFunction) {
-                if (settings.action === action) {
-                    actionFunction(object, settings);
+                if (settingsAction.action === action) {
+                    actionFunction(object, settingsAction);
                 }
             });
         }

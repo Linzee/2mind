@@ -63,6 +63,11 @@ class UsersManager implements \Nette\Security\IAuthenticator {
         $banEntry = $this->database->table('wall_ban')->where('ip = ? OR id = ?', array($id, $id))->fetch();
         return $banEntry ? true : false;
     }
+    
+    public function removeAllPostsBy($id) {
+        $this->database->table('wall_posts')->where('user', $id)->update(array('deleted' => 1));
+        return true;
+    }
 
     /**
      * Performs an authentication.

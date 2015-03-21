@@ -7,12 +7,12 @@ $.fn.twoMinDmap = function (settingsIn) {
         speed: 2000,
         template: '<div class="map-block">' +
                 '<div class="block-info">' +
-                '<h3 class="title"><a href="#"></a></h3>' +
-                '<div class="description"></div>' +
+                 '<h3 class="title"><a href="#"></a></h3>' +
+                '<span class="description"></span>' +
                 '<div class="coords"></div>' +
                 '</div>' +
                 '</div>',
-        zoom_default: 10
+        block_size: 100
     }, settingsIn);
 
     var ajaxing = false;
@@ -20,7 +20,7 @@ $.fn.twoMinDmap = function (settingsIn) {
     var latestRange = null;
 
     var utils = new twoMinDutils({
-        block_size: settings.zoom_default,
+        block_size: settings.block_size,
         blocksHolder: blocksHolder
     });
 
@@ -76,11 +76,16 @@ $.fn.twoMinDmap = function (settingsIn) {
             blockEl.find('.coords').text('[' + block.block_x + ", " + block.block_y + ']');
 
             blockEl.css({
-                left: block.block_x * settings.zoom_default,
-                top: block.block_y * settings.zoom_default
+                left: block.block_x * settings.block_size,
+                top: block.block_y * settings.block_size
             });
-
-            blocksHolder.trigger("postUpdate", [blockEl]);
+            
+            var blockInfo = blockEl.find('.block-info');
+            while(blockEl.height() > settings.block_size) {
+                blockInfo.css("font-size", parseInt(blockInfo.css("font-size")) - 1);
+            }
+            
+            blocksHolder.trigger("mapBlockUpdate", [blockEl]);
         });
     };
 
@@ -89,24 +94,8 @@ $.fn.twoMinDmap = function (settingsIn) {
 
         blockEl.attr('id', id);
         blocksHolder.append(blockEl);
-        blocksHolder.trigger("blockCreated", [blockEl]);
-
-        var blockInfo = blockEl.find('.block-info');
-        var hiding = false;
-
-        blockEl.on('click mouseenter', function () {
-            if (!hiding)
-                blockInfo.show();
-            hiding = false;
-        });
-        blockEl.mouseleave(function () {
-            blockInfo.hide();
-        });
-        blockInfo.on('click', function (event) {
-            blockInfo.hide();
-            hiding = true;
-        });
-
+        blocksHolder.trigger("mapBlockCreaated", [blockEl]);
+        
         return blockEl;
     };
 

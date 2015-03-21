@@ -42,6 +42,10 @@ $.fn.twoMinDsettings = function (utils, settingsIn) {
     };
 
     var updateBackground = function (background) {
+        
+        if(!background)
+            return;
+        
         var bgq = '';
         if (background.match("^#")) {
             bgq = background;
@@ -62,53 +66,25 @@ $.fn.twoMinDsettings = function (utils, settingsIn) {
     }
 };
 
-$.fn.twoMinDcolorSelector = function (utils, settingsIn) {
-
-    var settings = $.extend({}, {
-        template_color: '<a href="#" class="color"></a>'
-    }, settingsIn);
+$.fn.twoMinDcolorSelector = function () {
 
     var colorsSelector = this;
 
-    var randomizeColors = function () {
 
-        var colors = colorsSelector.find(".colors");
 
-        colors.empty();
+    colorsSelector.find(".colors li a").each(function (index, el) {
 
-        for (i = 0; i < 4; i++) {
-            var color = '#' + randomColor();
+        var c = $(el);
 
-            var itema = $(settings.template_color);
+        c.css("background", c.text());
 
-            itema.text(color);
-            itema.css('background-color', color);
-            itema.attr('data-color', color);
-
-            var item = $('<li></li>');
-            item.append(itema);
-            colors.append(item);
-        }
-
-        colorsSelector.find(".colors li a").click(function (event) {
-
-            colorsSelector.find(".color-field").val($(this).attr('data-color'));
+        c.click(function (event) {
+            colorsSelector.find(".color-field").val(c.text());
 
             colorsSelector.find(".colors li a.selected").removeClass('selected');
             $(this).addClass('selected');
 
             event.preventDefault();
         });
-    };
-
-    var randomColor = function () {
-        return (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
-    };
-
-    colorsSelector.find(".randomize-colors").click(function () {
-        randomizeColors();
-        event.preventDefault();
     });
-
-    randomizeColors();
 };

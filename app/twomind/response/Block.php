@@ -75,7 +75,7 @@ class Block implements IResponse {
         }
 
         $httpResponse->setContentType('application/json');
-        $httpResponse->setExpiration(FALSE);
+        $httpResponse->setHeader('Cache-Control', 's-maxage=0, max-age=0, must-revalidate');
         echo \Nette\Utils\Json::encode($response);
     }
 

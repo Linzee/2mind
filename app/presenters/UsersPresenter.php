@@ -72,7 +72,7 @@ class UsersPresenter extends BasePresenter {
             if ($this->isAjax() || $this->allowWithoutAjax) {
 
                 if (!$this->currentUser->isModerator()) {
-                    $this->simpleResponse(\App\TwoMinD\WallError::NO_MODERATOR);
+                    $this->simpleResponse(\App\TwoMinD\WallError::$NO_MODERATOR);
                     return;
                 }
 
@@ -87,4 +87,24 @@ class UsersPresenter extends BasePresenter {
         }
     }
 
+    public function renderRemoveAllPosts($id) {
+
+        if ($id) {
+            if ($this->isAjax() || $this->allowWithoutAjax) {
+
+                if (!$this->currentUser->isModerator()) {
+                    $this->simpleResponse(\App\TwoMinD\WallError::$NO_MODERATOR);
+                    return;
+                }
+
+                $resopnse = $this->usersManager->removeAllPostsBy($id);
+
+                $this->simpleResponse($resopnse);
+            } else {
+                throw new \Nette\Application\ForbiddenRequestException("Only avaleible trought ajax.");
+            }
+        } else {
+            throw new \Nette\InvalidArgumentException("Argumets are missing");
+        }
+    }
 }
