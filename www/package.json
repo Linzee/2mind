@@ -1,8 +1,7 @@
 {
-  "name": "foundation-libsass-template",
-  "version": "0.0.1",
+  "name": "2minD",
+  "version": "1.0.1",
   "devDependencies": {
-    "foundation": "~5.4.7",
     "node-sass": "~0.7.0",
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
