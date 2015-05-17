@@ -1,5 +1,6 @@
 /log/
 /temp/
 /vendor/
-/www/bower_components/
-/www/node_modules/
+*/bower_components/*
+*/node_modules/*
+*/__history/*
