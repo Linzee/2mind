@@ -1,0 +1,23 @@
+/**
+ * Custom color scheme
+ * ----------------------------------------------------------------------------
+ */
+ 
+$x-primary-color: #FFE895;
+$x-secondary-color: #B11F1F;
+ 
+$x-bg-main: lighten($x-primary-color, 7%); //hsl(47, 100%, 86%);
+
+$x-topbar-gradient-from: desaturate(darken($x-primary-color, 24%), 34%); //#D9B743;
+$x-topbar-gradient-to: desaturate(darken($x-primary-color, 40%), 20%); //#B69214;
+$x-topbar-hover-gradient-from: #C68515;
+$x-topbar-hover-gradient-to: #955D0B;
+$x-topbar-border: desaturate(darken($x-primary-color, 31%), 52%); //#B69B40;
+
+$x-button-gradient-from: $x-topbar-gradient-from;
+$x-button-gradient-to: $x-topbar-gradient-to;
+$x-button-color: white;
+$x-button-dark-gradient-from: $x-topbar-hover-gradient-from;
+$x-button-dark-gradient-to: $x-topbar-hover-gradient-to;
+
+$x-text-shadow: desaturate(darken($x-primary-color, 55%), 30%);

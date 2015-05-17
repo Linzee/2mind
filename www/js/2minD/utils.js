@@ -6,7 +6,7 @@ function twoMinDutils(settingsIn) {
     }, settingsIn);
 
     this.stuped = function () {
-        alert('stuped');
+        alert('stuped'); //za to moze nicool
     };
 
     this.getScreenCenterBlockPosition = function () {

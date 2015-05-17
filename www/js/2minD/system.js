@@ -1,31 +1,14 @@
-$.fn.twoMinDsystem = function (utils, settingsIn) {
+$.fn.twoMinDsystem = function (twoMinD, settingsIn) {
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain,
         speed: 9999
     }, settingsIn);
 
-    var systemUpdate = function (block) {
+    var systemUpdate = function () {
 
-        var pos = utils.getScreenFloatBlockPosition();
+        var pos = twoMinD.utils.getScreenFloatBlockPosition();
 
-        var url = settings.ajax_url + "/wall/system?x=" + pos[0] + "&y=" + pos[1];
-
-        $.ajax({
-            url: url,
-            dataType: 'json'
-        }).done(function (data) {
-
-            if (data.online) {
-                $(".online-counter").text(data.online);
-            }
-            if (data.forceReload) {
-                location.reload();
-            }
-            if (data.sysmessage) {
-                utils.showMessage('System message:', data.sysmessage);
-            }
-        });
+        twoMinD.packets.packetSystem(pos[0], pos[1]);
     };
 
     setInterval(function () {

@@ -1,9 +1,8 @@
-$.fn.twoMinDblockEditing = function (utils, settingsIn) {
+$.fn.twoMinDblockEditing = function (twoMinD, settingsIn) {
 
     var blocksHolder = this;
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain,
         block_size: 2100
     }, settingsIn);
 
@@ -16,7 +15,7 @@ $.fn.twoMinDblockEditing = function (utils, settingsIn) {
 
     var update = function (force) {
 
-        var blockPos = utils.getScreenCenterBlock();
+        var blockPos = twoMinD.utils.getScreenCenterBlock();
 
         if (force || lastPos[0] !== blockPos[0] || lastPos[1] !== blockPos[1]) {
 
@@ -25,7 +24,7 @@ $.fn.twoMinDblockEditing = function (utils, settingsIn) {
             var description = block.find(".description").text();
 
 
-            /* //change location hash in address
+            /* //change location hash in address - dont work - totally broke functionality in chrome
              if (lastPos[0] !== blockPos[0] || lastPos[1] !== blockPos[1]) {
              window.location.hash = 'block_'+blockPos[0]+'_'+blockPos[1];
              }
@@ -98,19 +97,7 @@ $.fn.twoMinDblockEditing = function (utils, settingsIn) {
     });
 
     $("#blockInfo .title, #blockInfo .description").bind("change paste keyup", function () {
-
-        var url = settings.ajax_url + "/wall/editblock?x=" + lastPos[0] + "&y=" + lastPos[1]
-                + "&title=" + encodeURIComponent(titleDisplayer.val())
-                + "&description=" + encodeURIComponent(descriptionDisplayer.val());
-
-        $.ajax({
-            url: url,
-            dataType: 'json'
-        }).done(function (data) {
-            if (data.response !== 'success') {
-                utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
-            }
-        });
+        twoMinD.packets.packetEditBlock(lastPos[0], lastPos[1], titleDisplayer.val(), descriptionDisplayer.val());
     });
 
 };

@@ -244,7 +244,7 @@ $topbar-dropdown-shadow: 0 0 8px black;
               // $color - icon color
               // $hover-color - icon color during hover, here it is set the same as $color because the values are changed on line 264
               // $offcanvas - Set to false of @include in topbar
-              @include hamburger(22px, false, 0, 2px, 7px, $topbar-menu-icon-color, $topbar-menu-icon-color, false);
+              @include hamburger(16px, false, 0, 1px, 6px, $topbar-menu-icon-color, $topbar-menu-icon-color, false);
             }
           }
         }

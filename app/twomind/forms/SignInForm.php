@@ -28,7 +28,7 @@ class SignInForm extends Form {
 
         $form->addCheckbox('remember', 'Zapamatat prihlasenie');
 
-        $form->addSubmit('send', 'Prihlasit')
+        $form->addSubmit('send', 'Prihlásiť')
                 ->setAttribute('class', 'button expand');
 
         // call method signInFormSucceeded() on success

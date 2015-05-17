@@ -1,9 +1,8 @@
-$.fn.twoMinDlatest = function (settingsIn) {
+$.fn.twoMinDlatest = function (twoMinD, settingsIn) {
 
     var latestHolder = this;
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain,
         speed: 9000,
         limit: false,
         blocks: false,
@@ -21,44 +20,21 @@ $.fn.twoMinDlatest = function (settingsIn) {
                 '</a>' +
                 '</li>'
     }, settingsIn);
-
-    var ajaxing = false;
+    
     var latestUpdateTime = 0;
 
     var sendRequest = function () {
-
-        if (ajaxing)
-            return;
-
-        ajaxing = true;
-
+        
         var includeDeleted = '0';
         if (latestUpdateTime !== 0) {
             includeDeleted = '1';
         }
 
-        var url = settings.ajax_url + "/latest/latest?lastUpdate=" + latestUpdateTime + "&includeDeleted=" + includeDeleted;
-
-        if (settings.limit) {
-            url = url + '&limit=' + settings.limit;
-        }
-
-        if (settings.blocks) {
-            url = url + '&blocks=1';
-        }
-
-        $.ajax({
-            url: url,
-            dataType: 'json'
-        }).done(function (data) {
-
+        twoMinD.packets.packetLatest(latestUpdateTime, includeDeleted, settings.limit, settings.blocks, function(data) {
             if (data.posts) {
                 updatePosts(data.posts);
             }
-
             latestUpdateTime = data.now;
-
-            ajaxing = false;
         });
     };
 
@@ -107,9 +83,9 @@ $.fn.twoMinDlatest = function (settingsIn) {
                 postEl.find('.coord').text(' [' + post.block_x + ', ' + post.block_y + '] ');
 
                 if (settings.blocks) {
-                    postEl.find('a').attr('href', '../wall#block_' + post.block_x + '_' + post.block_y);
+                    postEl.find('a').attr('href', settings.ajax_url + '/wall#block_' + post.block_x + '_' + post.block_y);
                 } else {
-                    postEl.find('a').attr('href', '../wall#block_' + post.block_x + '_' + post.block_y + '_' + post.local_x + '_' + post.local_y);
+                    postEl.find('a').attr('href', settings.ajax_url + '/wall#block_' + post.block_x + '_' + post.block_y + '_' + post.local_x + '_' + post.local_y);
                 }
 
                 if (newEl) {

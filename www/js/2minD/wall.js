@@ -1,9 +1,8 @@
-$.fn.twoMinDwall = function (utils, settingsIn) {
+$.fn.twoMinDwall = function (twoMinD, settingsIn) {
 
     var blocksHolder = this;
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain,
         speed: 400,
         template_block: '<div class="block"></div>',
         template_post: '<p class="post"><span></span><time></time><a href="#" class="reply">Reply</a></p>',
@@ -11,26 +10,14 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
         moderator: false
     }, settingsIn);
     
-    var updating = false;
-
     var updateBlock = function (block) {
-
-        updating = true;
 
         var includeDeleted = '0';
         if (block.lastUpdate !== 0 || settings.moderator) {
             includeDeleted = '1';
         }
 
-        var url = settings.ajax_url + "/wall/block?x=" + block.x + "&y=" + block.y + "&lastUpdate=" + block.lastUpdate + "&includeDeleted=" + includeDeleted;
-
-        $.ajax({
-            url: url,
-            dataType: 'json'
-        }).done(function (data) {
-
-            updating = false;
-
+        twoMinD.packets.packetBlock(block.x, block.y, block.lastUpdate, includeDeleted, function(data) {
             updateBlockData(data);
         });
     };
@@ -76,8 +63,12 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
 
     var createNewBlock = function (id) {
         var blockEl = $(settings.template_block);
+        
         blockEl.attr('id', id);
         blocksHolder.append(blockEl);
+        
+        blocksHolder.trigger('blockCreated', [id]);
+        
         return blockEl;
     };
 
@@ -149,7 +140,7 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
             } else {
                 
                 postEl.find('span').text(post.content);
-                postEl.find('time').text(utils.prettyDate(post.created));
+                postEl.find('time').text(twoMinD.utils.prettyDate(post.created));
 
                 if (!post.parent) {
                     if (postEl.parent().hasClass('post-group')) {
@@ -169,7 +160,7 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
                     background: '#' + post.color
                 });
 
-                if (utils.isColorDark(post.color)) {
+                if (twoMinD.utils.isColorDark(post.color)) {
                     postEl.css({
                         color: '#FFF'
                     });
@@ -225,11 +216,8 @@ $.fn.twoMinDwall = function (utils, settingsIn) {
     };
 
     setInterval(function () {
-
-        if (updating)
-            return;
-
-        var screenBlock = utils.getScreenCenterBlock();
+        
+        var screenBlock = twoMinD.utils.getScreenCenterBlock();
 
         var oldestUpdate = 0;
         var oldestBlock = null;

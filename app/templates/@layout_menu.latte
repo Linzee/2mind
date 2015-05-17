@@ -49,9 +49,9 @@
                         <li><a n:href="Wall:random full">{_}Náhodný zaplnený štvorec{/_}</a></li>
 
                         {if $currentUser->isModerator()}
-                            <li><label>Moderator</label></li>
+                            <li><label>Moderátor</label></li>
                             <li><a class="online" href="#">Online (<span class="online-counter">{$online}</span>)</a></li>
-                        {/if}
+                            {/if}
                     </ul>
                 </aside>
                 {/block}
@@ -92,61 +92,28 @@
         <script src="{$basePath}/js/jquery.ui.touch-punch.min.js"></script>
         <script src="{$basePath}/js/jquery.cookie.js"></script>
         <script src="{$basePath}/js/main.js"></script>
-
+        <script src="{$basePath}/js/jquery.plugin.min.js"></script>
         <script src="{$basePath}/js/jquery.fullscreen.min.js"></script>
-        <script src="{$basePath}/js/2minD/utils.js"></script>
-        <script src="{$basePath}/js/2minD/actions.js"></script>
-        <script src="{$basePath}/js/2minD/settings.js"></script>
+        <script src="{$basePath}/js/jquery-collision.min.js"></script>
+        <script src="{$basePath}/js/jquery.mousewheel.min.js"></script>
+        <script src="{$basePath}/js/jquery.maxlength.min.js"></script>
+        {*<script src="{$basePath}/js/jquery.touchSwipe.min.js"></script>*}
+        <script src="{$basePath}/js/2mind.min.js"></script>
         <script type="text/javascript">
-            var baseSettings = {
+            var twoMinDsettings = {
                 ajax_url: {$basePath},
-                moderator: {$currentUser->isModerator() ? 'true' : 'false'|noescape}
+                moderator: {$currentUser->isModerator() ? 'true' : 'false'|noescape},
+                posLoad: {$currentUser->getPosString()|noescape},
+                presentation: false
             };
-            var blocksHolder = $('.blocks-holder');
-            var utils = new twoMinDutils({
-                blocksHolder: blocksHolder
-            });
 
-            $(".settings-form").twoMinDsettings(utils, baseSettings);
-            blocksHolder.twoMinDactions(utils, baseSettings);
+            var twoMinD = TwoMinD();
+            twoMinD.setupBasic();
 
-            $('header .icon-list .search').twoMinDaction({
-                action: 'search_button'
-            });
-            $('.right-off-canvas-menu .settings').twoMinDaction({
-                action: 'settings'
-            });
-            $('.right-off-canvas-menu .fullscreen').twoMinDaction({
-                action: 'fullscreen'
-            });
+            {if $currentUser->isModerator()}
+            twoMinD.setupModerator();
+            {/if}
         </script>
-
-        {if $currentUser->isModerator()}
-            <script src="{$basePath}/js/2minD/moderatorActions.js"></script>
-            <script type="text/javascript">
-
-            blocksHolder.twoMinDmoderatorActions(utils, baseSettings);
-
-            $('.right-off-canvas-menu .online').twoMinDmoderatorAction({
-                action: 'online'
-            });
-            $('#userReveal .ban').twoMinDmoderatorAction({
-                action: 'userBan'
-            });
-            $('#userReveal .unban').twoMinDmoderatorAction({
-                action: 'userUnban'
-            });
-            $('#userReveal .removeAllPosts').twoMinDmoderatorAction({
-                action: 'userRemoveAllPosts'
-            });
-            $('#postReveal .remove').twoMinDmoderatorAction({
-                action: 'postRemove'
-            });
-            $('#postReveal .renew').twoMinDmoderatorAction({
-                action: 'postRenew'
-            });
-            </script>
-        {/if}
 
         {/block}
     </body>

@@ -30,11 +30,11 @@
         </ul>
         <div id="blockInfo">
             <div>
-                <input id="tutorial-title" type="text" class="semiedtable title" placeholder="Nepomenovany" />
+                <input id="tutorial-title" type="text" class="semiedtable title" placeholder="Nepomenovaný" />
                 <span style="font-size: 1.5rem" class="dynamic-width-input"></span>
             </div>
             <div>
-                <input type="text" class="semiedtable description" placeholder="Nepomenovany" />
+                <input type="text" class="semiedtable description" placeholder="Popis" />
                 <span style="font-size: 0.875rem" class="dynamic-width-input"></span>
             </div>
         </div>
@@ -59,35 +59,34 @@
 </div>
 
 <ol class="joyride-list" data-joyride>
-    <li data-options="tip_location: top; prev_button: false" data-prev-text="Speť" data-text="Ďalej">
+    <li data-options="tip_location: top; prev_button: false" data-prev-text="Späť" data-text="Ďalej">
         <h4>Vitajte</h4>
-        <p>Ak sa chcete zorientovať na stránke môžete si pozrieť návod alebo ho zavrieť.</p>
+        <p>Ak sa chcete zorientovať na stránke, môžete si pozrieť návod.</p>
     </li>
-    <li data-id="tutorial-add" data-options="tip_location: top" data-prev-text="Speť" data-text="Ďalej">
+    <li data-id="tutorial-add" data-options="tip_location: top" data-prev-text="Späť" data-text="Ďalej">
         <h4>Nová správa</h4>
-        <p>Kliknutím na tento symbol sa otvorí okno na napísanie novej správy. Takisto môžeš odpovedať na jednotlivé správy keď stlačíš tlačidlo na nich.</p>
+        <p>Kliknutím na tento symbol sa otvorí okno na písanie novej správy. Odpovedať na jednotlivé správy môžeš kliknutim tlačidla na nich.</p>
     </li>
-    <li data-id="tutorial-title" data-options="tip_location: bottom" data-prev-text="Speť" data-text="Ďalej">
+    <li data-id="tutorial-title" data-options="tip_location: bottom" data-prev-text="Späť" data-text="Ďalej">
         <h4>Štvorce</h4>
-        <p>Tu sa da zistiť alebo zmeniť nadpis a popis štvorca v ktorom sa pravé nachádzaš.</p>
+        <p>Tu sa dá zistiť alebo zmeniť nadpis a popis štvorca, v ktorom sa práve nachádzaš.</p>
     </li> 
-    <li data-id="tutorial-coord" data-options="tip_location: right" data-prev-text="Speť" data-text="Ďalej">
+    <li data-id="tutorial-coord" data-options="tip_location: right" data-prev-text="Späť" data-text="Ďalej">
         <h4>Aktuálna pozícia</h4>
-        <p>V tomto rohu môžeš zistiť svoju aktuálnu pozíciu alebo ju upraviť.</p>
+        <p>V tomto rohu môžeš zistiť svoju aktuálnu pozíciu alebo ju zmeniť.</p>
     </li>
-    <li data-id="tutorial-search" data-options="tip_location: left" data-prev-text="Speť" data-text="Ďalej">
+    <li data-id="tutorial-search" data-options="tip_location: left" data-prev-text="Späť" data-text="Ďalej">
         <h4>Vyhľadávanie</h4>
-        <p>Ak ta nejaká téma zaujala a chceš sa k nej vrátiť, môžeš pohľadať jej názov.</p>
     </li>
-    <li data-id="tutorial-menu" data-options="tip_location: left" data-prev-text="Speť" data-text="Ďalej">
+    <li data-id="tutorial-menu" data-options="tip_location: left" data-prev-text="Späť" data-text="Ďalej">
         <h4>Menu</h4>
-        <p>Tu môžeme nájsť ďalšie zaujímavé veci ako napríklad mapu, zoznam posledných správ, nastavenia, zapnutie stránky na celú obrazovku.</p>
+        <p>V menu nájdeš: mapu, zoznam posledných správ, nastavenia, zobrazenie stránky na celú obrazovku.</p>
     </li>
-    <li data-options="tip_location: top right" data-prev-text="Speť" data-text="Ďalej">
+    <li data-options="tip_location: top right" data-prev-text="Späť" data-text="Ďalej">
         <h4>Mazanie</h4>
-        <p>Jednotlivé správy môžeš premiestňovať ťahaním. Ak chceš správu odstrániť stačí ju potiahnuť do pravého dolného rohu a pustiť.</p>
+        <p>Jednotlivé správy môžeš premiestňovať ťahaním. Ak chceš správu odstrániť, stačí ju potiahnuť do pravého dolného rohu a pustiť.</p>
     </li>
-    <li data-options="tip_location: left" data-prev-text="Speť" data-text="Koniec">
+    <li data-options="tip_location: left" data-prev-text="Späť" data-text="Koniec">
         <p>To je všetko, zvyšok budeš musieť objaviť sám. Prajem veľa šťastia pri objavovaní tejto stránky.</p>
     </li>
 </ol>
@@ -96,54 +95,7 @@
 
 {block scripts}
 {include parent}
-<script src="{$basePath}/js/jquery-collision.min.js"></script>
-<script src="{$basePath}/js/jquery.mousewheel.min.js"></script>
-<script src="{$basePath}/js/2minD/utils.js"></script>
-<script src="{$basePath}/js/2minD/actions.js"></script>
-<script src="{$basePath}/js/2minD/wall.js"></script>
-<script src="{$basePath}/js/2minD/post.js"></script>
-<script src="{$basePath}/js/2minD/blockEditing.js"></script>
-<script src="{$basePath}/js/2minD/system.js"></script>
-<script src="{$basePath}/js/2minD/infiniteMover.js"></script>
-<script src="{$basePath}/js/2minD/latest.js"></script>
-
 <script type="text/javascript">
-    $(function () {
-
-        blocksHolder.twoMinDwall(utils, baseSettings);
-        blocksHolder.twoMinDsystem(utils, baseSettings);
-        blocksHolder.twoMinDblockEditing(utils, baseSettings);
-        blocksHolder.twoMinDpost(utils, baseSettings);
-
-        $('.blocks-holder-mover').twoMinDinfiniteMover({
-            target: blocksHolder
-        });
-
-        //actions
-        $('header .icon-list .spawn').twoMinDaction({
-            action: 'spawn',
-            spawnToCenter: true,
-            posSpawn: {
-                pos_x: 0.5,
-                pos_y: 0.5
-            },
-            posLoad: {$currentUser->getPosString()|noescape}
-        });
-        $('footer .icon.add').twoMinDaction({
-            action: 'add'
-        });
-        $('#addReveal').twoMinDaction({
-            action: 'addReveal'
-        });
-
-        $('#block_0_0 .search').twoMinDaction({
-            action: 'search_button'
-        });
-
-        $('#block_0_0 .latest-posts').twoMinDlatest({
-            ajax_url: {$basePath},
-            limit: 6
-        });
-    });
+    twoMinD.setupWall();
 </script>
 {/block}

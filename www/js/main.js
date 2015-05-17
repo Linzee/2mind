@@ -3,16 +3,16 @@ $(function () {
     var deleteButton = $("footer .icon.delete");
 
     var tutorialPreStep = function (id) {
-        if(id === 6) {
+        if (id === 6) {
             deleteButton.show();
         }
     };
     var tutorialPostStep = function (id) {
-        if(id === 6) {
+        if (id === 6) {
             deleteButton.hide();
         }
     };
-    var tutorialDone = function() {
+    var tutorialDone = function () {
         deleteButton.hide(); //just in case
     };
 
@@ -33,5 +33,10 @@ $(function () {
     if ($('.joyride-list').size() > 0) {
         $(document).foundation('joyride', 'start');
     }
-
+    
+    $(".start-guide").click(function() {
+        $.removeCookie('tutorial');
+        $(document).foundation('joyride', 'start');
+        return false;
+    });
 });

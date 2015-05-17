@@ -1,9 +1,8 @@
-$.fn.twoMinDmap = function (settingsIn) {
+$.fn.twoMinDmap = function (twoMinD, settingsIn) {
 
     var blocksHolder = this;
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain,
         speed: 2000,
         template: '<div class="map-block">' +
                 '<div class="block-info">' +
@@ -14,8 +13,7 @@ $.fn.twoMinDmap = function (settingsIn) {
                 '</div>',
         block_size: 100
     }, settingsIn);
-
-    var ajaxing = false;
+    
     var latestUpdateTime = 0;
     var latestRange = null;
 
@@ -25,12 +23,7 @@ $.fn.twoMinDmap = function (settingsIn) {
     });
 
     var sendRequest = function () {
-
-        if (ajaxing)
-            return;
-
-        ajaxing = true;
-
+        
         var range = utils.getScreenRangeBlocks();
 
         if (latestRange !== null) {
@@ -42,20 +35,12 @@ $.fn.twoMinDmap = function (settingsIn) {
 
         latestRange = range;
 
-        var url = settings.ajax_url + "/map/map?lastUpdate=" + latestUpdateTime + '&x1=' + range[0] + '&y1=' + range[1] + '&x2=' + range[3] + '&y2=' + range[3];
-
-        $.ajax({
-            url: url,
-            dataType: 'json'
-        }).done(function (data) {
-
+        twoMinD.packets.packetMap(range[0], range[1], range[2], range[3], latestUpdateTime, function(data) {
             latestUpdateTime = data.now;
 
             if (data.blocks) {
                 updateBlocks(data.blocks);
             }
-
-            ajaxing = false;
         });
     };
 
@@ -70,7 +55,7 @@ $.fn.twoMinDmap = function (settingsIn) {
                 blockEl = createNewBlock(blockId);
             }
 
-            blockEl.find('.title a').attr('href', '../wall#block_' + block.block_x + "_" + block.block_y)
+            blockEl.find('.title a').attr('href', settings.ajax_url + '/wall#block_' + block.block_x + "_" + block.block_y)
             blockEl.find('.title a').text(block.title);
             blockEl.find('.description').text(block.description);
             blockEl.find('.coords').text('[' + block.block_x + ", " + block.block_y + ']');
@@ -81,7 +66,7 @@ $.fn.twoMinDmap = function (settingsIn) {
             });
             
             var blockInfo = blockEl.find('.block-info');
-            while(blockEl.height() > settings.block_size) {
+            while(blockEl.height() > settings.block_size || blockEl.width() > settings.block_size) {
                 blockInfo.css("font-size", parseInt(blockInfo.css("font-size")) - 1);
             }
             

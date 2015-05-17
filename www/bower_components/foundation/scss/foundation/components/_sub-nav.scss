@@ -33,7 +33,7 @@ $sub-nav-font-color-hover: scale-color($sub-nav-font-color, $lightness: -25%) !d
 // We use these to control the active item styles
 
 $sub-nav-active-font-weight: $font-weight-normal !default;
-$sub-nav-active-bg: scale-color($sub-nav-active-bg, $lightness: -14%) !default;
+$sub-nav-active-bg: $primary-color !default;
 $sub-nav-active-bg-hover: scale-color($sub-nav-active-bg, $lightness: -14%) !default;
 $sub-nav-active-color: #fff !default;
 $sub-nav-active-padding: $sub-nav-padding !default;
@@ -62,8 +62,7 @@ $sub-nav-item-divider-margin: rem-calc(12) !default;
   width: auto;
   overflow: hidden;
   margin: $sub-nav-list-margin;
-  padding: $sub-nav-list-padding-top;
-  padding-bottom: $sub-nav-list-padding-top/2;
+  padding-top: $sub-nav-list-padding-top;
   margin-#{$opposite-direction}: 0;
   margin-#{$default-float}: rem-calc(-12);
 
@@ -88,7 +87,7 @@ $sub-nav-item-divider-margin: rem-calc(12) !default;
       color: $sub-nav-font-color;
       padding: $sub-nav-padding;
       &:hover {
-        background: $active-bg-hover;
+        color: $sub-nav-font-color-hover;
       }
     }
 

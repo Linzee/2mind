@@ -10,11 +10,12 @@
         <ul class="inline-list">
             {if $user->isLoggedIn()}
                 <li>{$user->id}</li>
-                <li><a n:href="User:logout">Odhlasit</a></li>
+                <li><a n:href="User:logout">Odhlásiť</a></li>
                 {/if}
             <li><a n:href="Map:">Mapa</a></li>
-            <li><a n:href="Latest:">Najnovsie spravy</a></li>
-            <li><a class="start-guide" href="#">Spusti tutorial</a></li>
+            <li><a n:href="Latest:">Najnovšie správy</a></li>
+            <li><a class="start-guide" href="#">Spusti tutoriál</a></li>
+            <li><a class="start-presentation" href="#">Spusti prezentáciu</a></li>
         </ul>
     </div>
     {*

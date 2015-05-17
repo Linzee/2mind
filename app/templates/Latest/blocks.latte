@@ -23,11 +23,6 @@
 {include parent}
 <script src="{$basePath}/js/2minD/latest.js"></script>
 <script type="text/javascript">
-    $(function () {
-        $('.latest-posts').twoMinDlatest({
-            ajax_url: {$basePath},
-            blocks: true
-        });
-    });
+    twoMinD.setupLatest(true);
 </script>
 {/block}

@@ -1,7 +1,6 @@
-$.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
+$.fn.twoMinDmoderatorActions = function (twoMinD, settingsIn) {
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain,
         user_template: '<li><a href="#"></a></li>'
     }, settingsIn);
 
@@ -10,13 +9,8 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
     var actions = {
         online: function (object, settings) {
             object.click(function () {
-
-                var url = settings.ajax_url + "/users/users";
-
-                $.ajax({
-                    url: url,
-                    dataType: 'json'
-                }).done(function (data) {
+                
+                twoMinD.packets.packetSimple("/users/users", function (data) {
 
                     if (data.users) {
 
@@ -51,13 +45,8 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
         user: function (object, settings) {
             object.click(function () {
                 $('#userReveal').foundation('reveal', 'open');
-
-                var url = settings.ajax_url + "/users/user?id=" + settings.user;
-
-                $.ajax({
-                    url: url,
-                    dataType: 'json'
-                }).done(function (data) {
+                
+                twoMinD.packets.packetSimple("/users/user?id=" + settings.user, function (data) {
 
                     if (data.user) {
 
@@ -76,7 +65,7 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
                             }
 
                             if (value.date) {
-                                value = utils.prettyDate(value);
+                                value = twoMinD.utils.prettyDate(value);
                             }
 
                             userEl.find('.' + index).text(value);
@@ -91,12 +80,7 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
         post: function (object, settings) {
             object.click(function () {
 
-                var url = settings.ajax_url + "/wall/post?id=" + settings.post;
-
-                $.ajax({
-                    url: url,
-                    dataType: 'json'
-                }).done(function (data) {
+                twoMinD.packets.packetSimple("/wall/post?id=" + settings.post, function (data) {
 
                     if (data.post) {
 
@@ -111,7 +95,7 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
                             }
 
                             if (value.date) {
-                                value = utils.prettyDate(value);
+                                value = twoMinD.utils.prettyDate(value);
                             }
 
                             postEl.find('.' + index).text(value);
@@ -128,16 +112,7 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
 
                 var userId = object.closest(".reveal-modal").find(".id").text();
 
-                var url = settings.ajax_url + "/users/ban?id=" + userId + "&reason=" + encodeURIComponent('moderator');
-
-                $.ajax({
-                    url: url,
-                    dataType: 'json'
-                }).done(function (data) {
-                    if (data.response !== 'success') {
-                        utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
-                    }
-                });
+                twoMinD.packets.packetSimple("/users/ban?id=" + userId + "&reason=" + encodeURIComponent('moderator'));
                 
                 $('#userReveal').foundation('reveal', 'close');
                 
@@ -148,16 +123,7 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
 
                 var userId = object.closest(".reveal-modal").find(".id").text();
                 
-                var url = settings.ajax_url + "/users/unban?id=" + userId;
-                
-                $.ajax({
-                    url: url,
-                    dataType: 'json'
-                }).done(function (data) {
-                    if (data.response !== 'success') {
-                        utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
-                    }
-                });
+                twoMinD.packets.packetSimple("/users/unban?id=" + userId);
                 
                 $('#userReveal').foundation('reveal', 'close');
 
@@ -168,16 +134,7 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
 
                 var userId = object.closest(".reveal-modal").find(".id").text();
 
-                var url = settings.ajax_url + "/users/removeAllPosts?id=" + userId;
-
-                $.ajax({
-                    url: url,
-                    dataType: 'json'
-                }).done(function (data) {
-                    if (data.response !== 'success') {
-                        utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
-                    }
-                });
+                twoMinD.packets.packetSimple("/users/removeAllPosts?id=" + userId);
                 
                 $('#userReveal').foundation('reveal', 'close');
                 
@@ -188,16 +145,7 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
 
                 var postId = object.closest(".reveal-modal").find(".id").text();
 
-                var url = settings.ajax_url + "/wall/remove?id=" + postId;
-
-                $.ajax({
-                    url: url,
-                    dataType: 'json'
-                }).done(function (data) {
-                    if (data.response !== 'success') {
-                        utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
-                    }
-                });
+                twoMinD.packets.packetSimple("/wall/remove?id=" + postId);
 
                 $('#postReveal').foundation('reveal', 'close');
 
@@ -208,16 +156,7 @@ $.fn.twoMinDmoderatorActions = function (utils, settingsIn) {
 
                 var postId = object.closest(".reveal-modal").find(".id").text();
 
-                var url = settings.ajax_url + "/wall/renew?id=" + postId;
-
-                $.ajax({
-                    url: url,
-                    dataType: 'json'
-                }).done(function (data) {
-                    if (data.response !== 'success') {
-                        utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
-                    }
-                });
+                twoMinD.packets.packetSimple("/wall/renew?id=" + postId);
 
                 $('#postReveal').foundation('reveal', 'close');
 

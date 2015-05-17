@@ -194,15 +194,20 @@ textarea.semiedtable, input.semiedtable {
 		input {
 			text-align: center;
 			vertical-align: middle;
+			margin-bottom: 0;
 		
 			&.title {
 				font-size: rem-calc(24);
 			}
 		
 			&.description {
-				margin-top: -8px;
+				position: relative;
+				top: -8px;
 				font-size: rem-calc(14);
 				display: none;
+				margin-bottom: 0;
+				
+				background: rgba(255, 255, 255, 0.8);
 			}
 		}
 		
@@ -476,7 +481,7 @@ textarea.semiedtable, input.semiedtable {
 			vertical-align: middle;
 			text-align: center;
 			color: gray;
-			color: rgba(255, 255, 255, 0.1);
+			font-size: 0;
 			
 			&.selected {
 				box-shadow: 0 0 5px black;
@@ -615,6 +620,21 @@ textarea.semiedtable, input.semiedtable {
 		background-color: #d73d32;
 	}
 }
+
+/* Styles for Max Length plugin v2.0.1 */
+.maxlength-feedback {
+	font-size: rem-calc(12);
+}
+.maxlength-full {
+	background-color: #fee;
+}
+.maxlength-overflow {
+	background-color: #fcc;
+}
+.maxlength-disabled {
+	opacity: 0.5;
+}
+/* --- */
 
 h3.page-title {
 	color: $primary-color;

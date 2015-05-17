@@ -1,7 +1,6 @@
-$.fn.twoMinDactions = function (utils, settingsIn) {
+$.fn.twoMinDactions = function (twoMinD, settingsIn) {
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain,
         block_size: 2100
     }, settingsIn);
 
@@ -132,30 +131,17 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
 
             object.find("form").submit(function () {
 
-                var block_pos = utils.getScreenCenterBlock();
-                var local_pos = utils.getScreenCenterLocalBlockPosition();
+                var block_pos = twoMinD.utils.getScreenCenterBlock();
+                var local_pos = twoMinD.utils.getScreenCenterLocalBlockPosition();
 
-                var content = encodeURIComponent(addField.val());
+                var content = addField.val();
 
                 if (content.length === 0) {
                     object.foundation('reveal', 'close');
                     return false;
                 }
 
-                var url = settings.ajax_url + "/wall/add?block_x=" + block_pos[0] + "&block_y=" + block_pos[1] + "&x=" + local_pos[0] + "&y=" + local_pos[1] + "&content=" + content;
-
-                if (replyTo) {
-                    url = url + '&parent=' + replyTo;
-                }
-
-                $.ajax({
-                    url: url,
-                    dataType: 'json'
-                }).done(function (data) {
-                    if (data.response !== 'success') {
-                        utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
-                    }
-                });
+                twoMinD.packets.packetAdd(block_pos[0], block_pos[1], local_pos[0], local_pos[1], content, replyTo);
 
                 object.foundation('reveal', 'close');
 
@@ -193,6 +179,8 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
                     }
                 }
             });
+            
+            addField.maxlength({max: 210, feedbackText: '{c}/{m}'});
         }
     };
 
@@ -230,21 +218,16 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
 
     var performSearch = function (search) {
 
-        var url = settings.ajax_url + "/wall/search?search=" + encodeURIComponent(search);
-
-        $.ajax({
-            url: url,
-            dataType: 'json'
-        }).done(function (data) {
+        twoMinD.packets.packetSearch(search, function(data) {
             printSearchResult(data);
         });
-
+        
     };
 
     var updateHashLocation = function () {
         var hash = window.location.hash.slice(1);
         if (hash.match("^block_")) {
-
+            
             var x = 0;
             var y = 0;
 
@@ -268,7 +251,10 @@ $.fn.twoMinDactions = function (utils, settingsIn) {
             $(".blocks-holder").trigger("holderMoved");
         }
     };
-    updateHashLocation();
+    setTimeout(updateHashLocation, 100);
+    $(window).on("hashchange", function() {
+        updateHashLocation();
+    });
 
     $.fn.twoMinDaction = function (settingsIn) {
 

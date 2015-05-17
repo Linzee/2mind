@@ -1,0 +1,8 @@
+/**
+ * Custom variables
+ * ----------------------------------------------------------------------------
+ */
+ $x-spaces-size: 10px;
+ $x-border-radius: 5px;
+ 
+ $x-font-regular:  'Roboto Condensed', Helvetica, Arial, sans-serif;

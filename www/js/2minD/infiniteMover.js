@@ -8,10 +8,12 @@ $.fn.twoMinDinfiniteMover = function (settingsIn) {
         draggDistance: 5,
         //zoom
         zoomEnabled: false,
+        mobileZoomEnabled: false,
         zoom_min: 0.4,
         zoom_start: 1,
-        zoom_max: 3,
+        zoom_max: 2.0,
         //control
+        arrowKeysEnabled: true,
         arrowKeysSpeed: 40,
         mousewheelEnabled: true,
         mousewheelMoveSpeed: 12.6
@@ -101,6 +103,36 @@ $.fn.twoMinDinfiniteMover = function (settingsIn) {
             });
         });
     }
+    
+    if(settings.mobileZoomEnabled) {
+        
+        var zoomLock = 1;
+        
+        $(".blocks-holder").swipe({
+            pinchStatus: function (event, phase, direction, distance, duration, fingerCount, pinchZoom) {
+                
+                if(phase === 'start') {
+                    zoomLock = zoom;
+                }
+                
+                zoom = zoomLock * pinchZoom;
+                
+                if(zoom < settings.zoom_min) {
+                    zoom = settings.zoom_min;
+                }
+                
+                if(zoom > settings.zoom_max) {
+                    zoom = settings.zoom_max;
+                }
+                
+                settings.target.css({
+                    transform: 'scale(' + zoom + ')'
+                });
+            },
+            fingers: 2,
+            pinchThreshold: 0
+        });
+    }
 
     if (settings.mousewheelEnabled) {
         $(document).bind('mousewheel', function (e) {
@@ -126,43 +158,45 @@ $.fn.twoMinDinfiniteMover = function (settingsIn) {
         });
     }
 
-    $(document).keydown(function (e) {
+    if (settings.arrowKeysEnabled) {
+        $(document).keydown(function (e) {
 
-        if ($("input:focus").size() === 0) {
+            if ($("input:focus").size() === 0) {
 
-            var pos = settings.target.position();
+                var pos = settings.target.position();
 
-            switch (e.which) {
-                case 37: // left
-                    settings.target.css({
-                        left: pos.left + settings.arrowKeysSpeed
-                    });
-                    break;
+                switch (e.which) {
+                    case 37: // left
+                        settings.target.css({
+                            left: pos.left + settings.arrowKeysSpeed
+                        });
+                        break;
 
-                case 38: // up
-                    settings.target.css({
-                        left: pos.left + settings.arrowKeysSpeed
-                    });
-                    break;
+                    case 38: // up
+                        settings.target.css({
+                            left: pos.left + settings.arrowKeysSpeed
+                        });
+                        break;
 
-                case 39: // right
-                    settings.target.css({
-                        left: pos.left + (-1 * settings.arrowKeysSpeed)
-                    });
-                    break;
+                    case 39: // right
+                        settings.target.css({
+                            left: pos.left + (-1 * settings.arrowKeysSpeed)
+                        });
+                        break;
 
-                case 40: // down
-                    settings.target.css({
-                        top: pos.top + (-1 * settings.arrowKeysSpeed)
-                    });
-                    break;
+                    case 40: // down
+                        settings.target.css({
+                            top: pos.top + (-1 * settings.arrowKeysSpeed)
+                        });
+                        break;
 
-                default:
-                    return; // exit this handler for other keys
+                    default:
+                        return; // exit this handler for other keys
+                }
+
             }
 
-        }
-
-        settings.target.trigger("holderMoved", [false]);
-    });
+            settings.target.trigger("holderMoved", [false]);
+        });
+    }
 };

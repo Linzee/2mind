@@ -26,19 +26,6 @@
 <script src="{$basePath}/js/2minD/infiniteMover.js"></script>
 <script src="{$basePath}/js/2minD/actions.js"></script>
 <script type="text/javascript">
-    $(function () {
-        $('.blocks-holder-mover').twoMinDinfiniteMover({
-            target: blocksHolder
-        });
-        $('header .icon-list .spawn').twoMinDaction({
-            action: 'spawn',
-            spawnToCenter: true
-        });
-        
-        blocksHolder.twoMinDmap({
-            ajax_url: {$basePath}
-        });
-    });
-
+    twoMinD.setupMap();
 </script>
 {/block}

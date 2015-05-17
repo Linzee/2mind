@@ -1,14 +1,13 @@
-$.fn.twoMinDsettings = function (utils, settingsIn) {
+$.fn.twoMinDsettings = function (twoMinD, settingsIn) {
 
     var settingsForm = this;
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain,
         template_color: '<a href="#" class="color"></a>'
     }, settingsIn);
 
     settingsForm.find('.color-selector').each(function (index, colorSelector) {
-        $(colorSelector).twoMinDcolorSelector(utils, settings);
+        $(colorSelector).twoMinDcolorSelector(twoMinD.utils, settings);
     });
 
     settingsForm.submit(function () {
@@ -28,17 +27,8 @@ $.fn.twoMinDsettings = function (utils, settingsIn) {
 
         color = color.substring(1);
 
-        var url = settings.ajax_url + "/wall/changeColor?color=" + encodeURIComponent(color) + '&background=' + encodeURIComponent(background);
-
-        $.ajax({
-            url: url,
-            dataType: 'json'
-        }).done(function (data) {
-            if (data.response !== 'success') {
-                utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
-            }
-        });
-
+        twoMinD.packets.packetChangeColor(color, background);
+        
     };
 
     var updateBackground = function (background) {
@@ -69,9 +59,7 @@ $.fn.twoMinDsettings = function (utils, settingsIn) {
 $.fn.twoMinDcolorSelector = function () {
 
     var colorsSelector = this;
-
-
-
+    
     colorsSelector.find(".colors li a").each(function (index, el) {
 
         var c = $(el);

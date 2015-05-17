@@ -1,7 +1,6 @@
-$.fn.twoMinDpost = function (utils, settingsIn) {
+$.fn.twoMinDpost = function (twoMinD, settingsIn) {
 
     var settings = $.extend({}, {
-        ajax_url: 'http://' + document.domain,
         draggDelay: 100,
         draggDistance: 5,
         moderator: false
@@ -14,58 +13,14 @@ $.fn.twoMinDpost = function (utils, settingsIn) {
 
     var movePost = function (id, offset) {
 
-        var url = settings.ajax_url + "/wall/move?id=" + id + "&x=" + Math.round(offset.left) + "&y=" + Math.round(offset.top);
-
-        $.ajax({
-            url: url,
-            dataType: 'json'
-        }).done(function (data) {
-            if (data.response !== 'success') {
-                utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
-            }
-        });
+        twoMinD.packets.packetMove(id, Math.round(offset.left), Math.round(offset.top));
 
     };
 
     var deletePost = function (id) {
 
-        var url = settings.ajax_url + "/wall/remove?id=" + id;
+        twoMinD.packets.packetRemove(id);
 
-        $.ajax({
-            url: url,
-            dataType: 'json'
-        }).done(function (data) {
-            if (data.response !== 'success') {
-                utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
-            }
-        });
-
-    };
-
-    var renewPost = function (id) {
-
-        var url = settings.ajax_url + "/wall/renew?id=" + id;
-
-        $.ajax({
-            url: url,
-            dataType: 'json'
-        }).done(function (data) {
-            if (data.response !== 'success') {
-                utils.showMessage('Something weird happend!', '(' + data.response + ') ' + data.message);
-            }
-        });
-
-    };
-
-    var centerOffset = function (element) {
-
-        var centerX = element.offset().left + element.width() / 2;
-        var centerY = element.offset().top + element.height() / 2;
-
-        return {
-            left: centerX,
-            top: centerY
-        };
     };
 
     var intersectOffsetElement = function (offset, el) {
@@ -228,13 +183,6 @@ $.fn.twoMinDpost = function (utils, settingsIn) {
             $(".post").removeClass("selected");
             $(this).addClass("selected");
         });
-
-        if (settings.moderator) {
-            $(this).click(function () {
-                /*var postId = post.attr("id").substring(5);
-                 renewPost(postId);*/
-            })
-        }
     });
 
 };
