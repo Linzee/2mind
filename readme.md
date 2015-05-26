@@ -1,4 +1,4 @@
-## 2minD: EN
+## 2minD
 
 2minD is virtual 2D wall, online discussion, where anyone can anonymously post comments.
 Wall is divided into rectangles, each rectangle sould contain some topic.
