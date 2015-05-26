@@ -4,14 +4,13 @@ module.exports = function(grunt) {
 
     sass: {
       options: {
-        includePaths: ['bower_components/foundation/scss']
       },
       dist: {
         options: {
           outputStyle: 'compressed'
         },
         files: {
-          'css/screen.css': 'scss/app.scss'
+          'css/style.css': 'scss/style.scss'
         }        
       }
     },
@@ -20,28 +19,8 @@ module.exports = function(grunt) {
       grunt: { files: ['Gruntfile.js'] },
 
       sass: {
-        files: ['scss/**/*.scss', 'js/2mind/*.js'],
-        tasks: ['sass', 'concat', 'uglify']
-      }
-    },
-    
-    concat: {
-      options: {
-        separator: ';'
-      },
-      dist: {
-        src: [
-          'js/2mind/*.js',
-        ],
-        dest: 'js/2mind.js'
-      }
-    },
-    
-    uglify: {
-      dist: {
-        files: {
-          'js/2mind.min.js': ['js/2mind.js']
-        }
+        files: ['*.scss'],
+        tasks: ['sass']
       }
     },
     
@@ -49,11 +28,8 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('build', ['sass']);
-  grunt.registerTask('default', ['concat', 'uglify', 'watch']);
+  grunt.registerTask('default', ['sass', 'watch']);
 
 }
