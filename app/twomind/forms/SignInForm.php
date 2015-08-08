@@ -30,7 +30,7 @@ class SignInForm extends Form {
 
         $form->addSubmit('send', 'Prihlásiť')
                 ->setAttribute('class', 'button expand');
-
+		
         // call method signInFormSucceeded() on success
         $form->onSuccess[] = $this->formSucceeded;
         return $form;
